@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <title>Portfólio | Breno J. Oliveira</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Portfólio de Breno J. Oliveira — projetos, skills e contato.">
+  <style>
+    /* ---------- PALETA & VARIÁVEIS ---------- */
+    :root{
+      --roxo-principal: #0d0717;    /* fundo principal */
+      --roxo-escuro:   #291845;    /* painel / cards */
+      --roxo-medio:    #6e47a2;    /* glow / accents */
+      --roxo-claro:    #986ddf;    /* destaque */
+      --roxo-bem-claro:#d1b4f9;    /* texto secundário */
+      --nav-height: 50px;
+      --radius: 12px;
+      --glass: rgba(255,255,255,0.03);
+      --max-width: 1100px;
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    /* ---------- RESET / BASE ---------- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: radial-gradient(1200px 600px at 10% 10%, rgba(110,71,162,0.08), transparent),
+                  linear-gradient(180deg,var(--roxo-principal), #0b0712 100%);
+      color: var(--roxo-bem-claro);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+
+    /* ---------- TOPBAR (formato original, mas estilizada) ---------- */
+    .topbar{
+      position:fixed;top:0;left:0;width:100%;height:var(--nav-height);
+      display:flex;align-items:center;justify-content:space-between;padding:0 20px;
+      z-index:1000;background:rgba(13,7,23,0.85);backdrop-filter:blur(6px);
+      border-bottom:1px solid rgba(209,180,249,0.06);
+    }
+    .brand{font-weight:800;color:var(--roxo-claro);letter-spacing:0.6px}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{padding:8px 10px;border-radius:8px;font-weight:600;transition:all .18s var(--ease)}
+    .navlinks a:hover{background:rgba(152,109,223,0.12)}
+
+    /* ---------- VIDEO BACKGROUND ---------- */
+    video.background{
+      position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;z-index:-1;opacity:0.16;
+    }
+
+    /* ---------- PÁGINAS (mantém formato: page1 + page2) ---------- */
+    .page{width:100%;min-height:calc(100vh);display:flex;justify-content:center;align-items:center;position:relative}
+    /* HERO (page1) */
+    .hero{
+      height:calc(100vh - var(--nav-height));padding:0;margin-top:var(--nav-height);
+      display:flex;align-items:center;justify-content:center;perspective:2000px;
+    }
+    .hero-inner{
+      width:100%;max-width:1200px;padding:34px;display:flex;gap:28px;align-items:center;justify-content:space-between;
+    }
+    .hero-left{flex:1;max-width:540px}
+    .kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(152,109,223,0.06);color:var(--roxo-claro);font-weight:700;margin-bottom:12px}
+    h1{font-size:2.4rem;color:var(--roxo-bem-claro);margin-bottom:10px}
+    p.lead{color:rgba(209,180,249,0.95);line-height:1.5}
+    .hero-actions{display:flex;gap:12px;margin-top:16px;align-items:center}
+    .btn{padding:10px 12px;border-radius:10px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);cursor:pointer;font-weight:700;transition:all .16s var(--ease)}
+    .btn.primary{background:linear-gradient(90deg,var(--roxo-claro),var(--roxo-medio));color:#0b0711;border:none;box-shadow:0 12px 34px rgba(110,71,162,0.14)}
+    .btn:hover{transform:translateY(-3px)}
+
+    /* CUBO (mantive estrutura e lógica) */
+    .cube-wrap{width:560px;height:560px;display:flex;align-items:center;justify-content:center}
+    .scene{width:520px;height:520px;position:relative;transform-style:preserve-3d;transition:transform .18s var(--ease)}
+    @media (max-width:1024px){ .scene{width:72vw;height:72vw} .face{width:100%;height:100%} .hero-inner{flex-direction:column-reverse;align-items:center} .hero-left{text-align:center} }
+    .face{
+      position:absolute;width:520px;height:520px;border-radius:18px;
+      border:4px solid rgba(209,180,249,0.06);
+      background: linear-gradient(180deg, rgba(110,71,162,0.12), rgba(41,24,69,0.22));
+      box-shadow: 0 30px 80px rgba(13,7,23,0.6), inset 0 0 60px rgba(152,109,223,0.04);
+      overflow:hidden;display:flex;align-items:center;justify-content:center;transition:box-shadow .18s;
+    }
+    .scene:hover .face{box-shadow:0 40px 120px rgba(110,71,162,0.18)}
+    .face img{width:100%;height:100%;object-fit:cover;filter:contrast(.98) saturate(1.06)}
+
+    /* ---------- PAGE 2 (portfolio and sections) ---------- */
+    .portfolio{
+      background: linear-gradient(180deg, var(--roxo-escuro), var(--roxo-principal));
+      padding:28px 20px 80px; margin-top:var(--nav-height);
+      box-sizing:border-box;
+    }
+    .container{max-width:var(--max-width);margin:0 auto}
+
+    .divider{
+      width:100%;height:72px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:26px
+    }
+    .divider .bar{
+      position:absolute;left:50%;transform:translateX(-50%);width:100vw;height:88px;background:var(--roxo-claro);opacity:0.12;border-radius:16px;box-shadow:0 0 26px rgba(152,109,223,0.16)
+    }
+    .divider h2{position:relative;z-index:2;margin:0;color:var(--roxo-bem-claro);font-size:22px;font-weight:700}
+
+    /* portfolio content base */
+    .portfolio-content{width:100%;max-width:var(--max-width);margin:0 auto;color:rgba(209,180,249,0.95)}
+    .intro{margin-bottom:18px;color:rgba(209,180,249,0.95)}
+
+    /* cards grid (projects) */
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:18px}
+    @media (max-width:1024px){ .grid{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:640px){ .grid{grid-template-columns:1fr} }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;padding:14px;border:1px solid rgba(255,255,255,0.03);
+      box-shadow:0 10px 40px rgba(13,7,23,0.6);transition:transform .18s var(--ease),box-shadow .18s var(--ease)
+    }
+    .card:hover{transform:translateY(-8px);box-shadow:0 26px 70px rgba(110,71,162,0.12)}
+    .thumb{height:160px;border-radius:10px;overflow:hidden;margin-bottom:12px;background:linear-gradient(90deg,#291845,#6e47a2)}
+    .project-title{font-weight:800;color:var(--roxo-claro);margin-bottom:6px}
+    .project-desc{color:rgba(209,180,249,0.9);margin-bottom:10px}
+    .badges{display:flex;gap:8px;flex-wrap:wrap}
+    .badge{padding:6px 8px;border-radius:999px;background:rgba(152,109,223,0.12);color:var(--roxo-claro);font-weight:700;font-size:0.85rem}
+
+    /* about / skills section (stacked vertically under portfólio) */
+    .section{margin-top:34px}
+    .about-grid{display:grid;grid-template-columns:1fr 360px;gap:20px}
+    @media (max-width:980px){ .about-grid{grid-template-columns:1fr} }
+    .card-panel{background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:16px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
+    .skill{display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px dashed rgba(255,255,255,0.03)}
+    .meter{width:60%;height:10px;border-radius:999px;background:rgba(255,255,255,0.04);overflow:hidden;margin-left:12px}
+    .meter > i{display:block;height:100%;background:linear-gradient(90deg,var(--roxo-claro),var(--roxo-medio));border-radius:999px}
+
+    /* timeline */
+    .timeline{position:relative;padding-left:18px}
+    .timeline:before{content:"";position:absolute;left:8px;top:0;height:100%;width:3px;background:linear-gradient(180deg,var(--roxo-claro),var(--roxo-medio));border-radius:4px;opacity:0.12}
+    .timeline-item{position:relative;padding:16px 0 18px 28px}
+    .timeline-item:before{content:"";position:absolute;left:0;top:20px;width:12px;height:12px;border-radius:50%;background:var(--roxo-claro);box-shadow:0 0 18px rgba(152,109,223,0.18)}
+
+    /* contact form */
+    .contact-grid{display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:20px}
+    @media (max-width:980px){ .contact-grid{grid-template-columns:1fr} }
+    .field{display:flex;flex-direction:column;margin-bottom:10px}
+    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.035);padding:10px;border-radius:8px;color:var(--roxo-bem-claro)}
+    textarea{min-height:120px;resize:vertical}
+
+    /* modal */
+    .modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;background:linear-gradient(180deg,rgba(13,7,23,0.75),rgba(13,7,23,0.9));z-index:2000;padding:20px}
+    .modal.open{display:flex}
+    .modal-card{width:min(960px,95%);background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);padding:18px;border-radius:12px;position:relative}
+    .modal-close{position:absolute;right:12px;top:12px;background:transparent;border-radius:999px;padding:6px;cursor:pointer}
+
+    /* footer */
+    footer{margin-top:38px;padding:24px 20px;text-align:center;color:rgba(209,180,249,0.6);border-top:1px solid rgba(255,255,255,0.02)}
+
+    /* small animations */
+    .fade-in{animation:fade .52s var(--ease) both}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* responsive tweaks */
+    @media (max-width:520px){ h1{font-size:1.6rem} .scene{width:320px;height:320px}.face{width:320px;height:320px} .cube-wrap{width:340px;height:340px} }
+
+  </style>
+</head>
+<body>
+
+  <!-- TOPBAR (igual formato que antes) -->
+  <header class="topbar" role="banner" aria-label="Barra superior">
+    <div class="brand">Breno J. Oliveira</div>
+    <nav class="navlinks" role="navigation" aria-label="Links">
+      <a href="#page1">Início</a>
+      <a href="#portfolio">Portfólio</a>
+      <a href="#about">Sobre</a>
+      <a href="#projects">Projetos</a>
+      <a href="#contact" class="btn">Contato</a>
+    </nav>
+  </header>
+
+  <!-- vídeo de fundo (fixo) -->
+  <video class="background" autoplay muted loop playsinline>
+    <source src="video1.mp4" type="video/mp4">
+  </video>
+
+  <!-- Áudios (mantidos) -->
+  <audio id="musica" loop><source src="fundo.mp3" type="audio/mp3"></audio>
+  <audio id="giro"><source src="giro.mp3" type="audio/mp3"></audio>
+  <audio id="click"><source src="click.mp3" type="audio/mp3"></audio>
+
+  <!-- === PAGE 1 (CUBO) === -->
+  <section id="page1" class="page hero" aria-label="Página inicial — cubo">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <span class="kicker">Estudante • Desenvolvedor</span>
+        <h1>Olá, eu sou <span style="color:var(--roxo-claro)">Breno J. Oliveira</span></h1>
+        <p class="lead">Apaixonado por tecnologia e por criar soluções visuais e funcionais. Explore meus projetos, habilidades e entre em contato.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="downloadCv">📄 Baixar CV</button>
+          <button class="btn" id="scrollToPortfolio">Ver Portfólio</button>
+          <div style="margin-left:12px;color:rgba(209,180,249,0.85);font-weight:700">17 anos • Estudante de TI</div>
+        </div>
+
+        <div style="height:14px"></div>
+
+        <div style="display:flex;gap:10px;">
+          <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)">
+            <strong style="color:var(--roxo-claro)">Email</strong>
+            <div class="muted">breox@example.com</div>
+          </div>
+          <div style="padding:10px;border-radius:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.03)">
+            <strong style="color:var(--roxo-claro)">Local</strong>
+            <div class="muted">Brasil</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cube-wrap">
+        <div class="scene" id="cube" aria-hidden="false" role="img" aria-label="Cubo interativo">
+          <div class="face front"><img src="1.png" alt="Frente"></div>
+          <div class="face back"><img src="2.png" alt="Trás"></div>
+          <div class="face right"><img src="3.png" alt="Direita"></div>
+          <div class="face left"><img src="4.png" alt="Esquerda"></div>
+          <div class="face top"><img src="5.png" alt="Topo"></div>
+          <div class="face bottom"><img src="5.png" alt="Base"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- === PAGE 2 (PORTFÓLIO) — aqui começa a "parte de baixo montada" === -->
+  <section id="portfolio" class="page portfolio" aria-label="Portfólio e conteúdo">
+    <div class="container">
+      <div class="divider" aria-hidden="false">
+        <h2>Meu Portfólio</h2>
+        <div class="bar" role="presentation"></div>
+      </div>
+
+      <div class="portfolio-content">
+        <p class="intro">Bem-vindo à minha coleção de projetos, experiências e habilidades. Clique nos cards para ver detalhes — tudo editável para você colocar seu conteúdo.</p>
+
+        <!-- Projetos (grid) -->
+        <section id="projects" class="section">
+          <h3 style="color:var(--roxo-claro);margin-bottom:8px">Projetos em destaque</h3>
+          <div class="grid">
+            <!-- Card 1 -->
+            <article class="card" data-project='{"title":"Semáforo Inteligente","tags":["Arduino","C++","IoT"],"desc":"Semáforo com display 7-seg e interação entre pedestres.","img":"proj1.png","long":"Sistema com dois Arduinos, displays, botões e lógica de prioridade. Código limpo e modular."}'>
+              <div class="thumb"><img src="proj1.png" alt="Semáforo"></div>
+              <div class="project-title">Semáforo Inteligente (Arduino)</div>
+              <div class="project-desc">Controle de semáforo com displays e interação de pedestres.</div>
+              <div class="badges"><span class="badge">Arduino</span><span class="badge">Eletrônica</span></div>
+              <div style="margin-top:10px;display:flex;gap:8px">
+                <button class="btn" onclick="openProject(this)">Ver</button>
+                <button class="btn" onclick="downloadProjetcSample('proj1')">Baixar</button>
+              </div>
+            </article>
+
+            <!-- Card 2 -->
+            <article class="card" data-project='{"title":"Site de Download de Vídeos","tags":["Frontend","UX"],"desc":"Protótipo para baixar vídeos de várias plataformas.","img":"proj2.png","long":"Protótipo com identificação de plataforma e seletores de qualidade."}'>
+              <div class="thumb"><img src="proj2.png" alt="Site Download"></div>
+              <div class="project-title">Site de Download</div>
+              <div class="project-desc">Protótipo que identifica origem e oferece resoluções.</div>
+              <div class="badges"><span class="badge">Frontend</span><span class="badge">UX</span></div>
+              <div style="margin-top:10px"><button class="btn" onclick="openProject(this)">Ver</button></div>
+            </article>
+
+            <!-- Card 3 -->
+            <article class="card" data-project='{"title":"Tetris 2","tags":["Game","JS"],"desc":"Versão aprimorada do Tetris com mecânicas completas.","img":"proj3.png","long":"Melhorias nas mecânicas, UI e persistência de pontuação."}'>
+              <div class="thumb"><img src="proj3.png" alt="Tetris"></div>
+              <div class="project-title">Tetris 2</div>
+              <div class="project-desc">Remake do Tetris com melhorias e design moderno.</div>
+              <div class="badges"><span class="badge">Game</span><span class="badge">JavaScript</span></div>
+              <div style="margin-top:10px"><button class="btn" onclick="openProject(this)">Ver</button></div>
+            </article>
+
+            <!-- Card 4 -->
+            <article class="card" data-project='{"title":"Protótipo Figma — Banco","tags":["Figma","Design"],"desc":"Protótipo conceitual para app bancário.","img":"proj4.png","long":"Protótipo com telas de login, tela inicial e fluxos de usuário."}'>
+              <div class="thumb"><img src="proj4.png" alt="Figma"></div>
+              <div class="project-title">Protótipo Figma</div>
+              <div class="project-desc">Protótipo de identidade visual e telas em Figma.</div>
+              <div class="badges"><span class="badge">Figma</span><span class="badge">Design</span></div>
+              <div style="margin-top:10px"><button class="btn" onclick="openProject(this)">Ver</button></div>
+            </article>
+
+            <!-- Card 5 -->
+            <article class="card" data-project='{"title":"Projeto X","tags":["HTML","CSS"],"desc":"Pequeno projeto para demonstração.","img":"proj5.png","long":"Exemplo de projeto de landing page."}'>
+              <div class="thumb" style="background:linear-gradient(90deg,#3b1e54,#6e47a2)"></div>
+              <div class="project-title">Projeto X</div>
+              <div class="project-desc">Descrição curta do projeto X.</div>
+              <div class="badges"><span class="badge">HTML</span></div>
+              <div style="margin-top:10px"><button class="btn" onclick="openProject(this)">Ver</button></div>
+            </article>
+
+            <!-- Card 6 -->
+            <article class="card" data-project='{"title":"Projeto Y","tags":["Demo"],"desc":"Protótipo interativo.","img":"proj6.png","long":"Protótipo com animações e interações."}'>
+              <div class="thumb" style="height:120px;background:linear-gradient(90deg,#291845,#6e47a2)"></div>
+              <div class="project-title">Projeto Y</div>
+              <div class="project-desc">Protótipo interativo de demonstração.</div>
+              <div class="badges"><span class="badge">Demo</span></div>
+              <div style="margin-top:10px"><button class="btn" onclick="openProject(this)">Ver</button></div>
+            </article>
+          </div>
+        </section>
+
+        <!-- SOBRE (logo em seguida) -->
+        <section id="about" class="section">
+          <h3 style="color:var(--roxo-claro);margin-bottom:10px">Sobre</h3>
+          <div class="about-grid">
+            <div class="card-panel">
+              <p>Sou estudante de TI e desenvolvedor front-end em formação. Gosto de transformar ideias em interfaces funcionais com atenção ao detalhe e à experiência do usuário. Abaixo você encontra minha trajetória e alguns projetos práticos.</p>
+              <div style="height:14px"></div>
+
+              <div class="timeline">
+                <div class="timeline-item">
+                  <div class="small muted">2025</div>
+                  <strong>Projetos completos e protótipos</strong>
+                  <p class="muted">Melhorias em Tetris, site de downloads e semáforo com Arduino.</p>
+                </div>
+                <div class="timeline-item">
+                  <div class="small muted">2024</div>
+                  <strong>Estudante de TI</strong>
+                  <p class="muted">Aprendizado em programação, UI e eletrônica básica.</p>
+                </div>
+              </div>
+            </div>
+
+            <aside class="card-panel">
+              <h4 style="color:var(--roxo-claro)">Resumo</h4>
+              <p class="muted">Aplicando conhecimentos em front-end, prototipação e integração com hardware.</p>
+              <div style="height:10px"></div>
+              <div class="skill"><div>HTML & CSS</div><div class="meter"><i style="width:92%"></i></div></div>
+              <div class="skill"><div>JavaScript</div><div class="meter"><i style="width:82%"></i></div></div>
+              <div class="skill"><div>Arduino</div><div class="meter"><i style="width:72%"></i></div></div>
+              <div style="height:12px"></div>
+              <div class="small muted">Ferramentas: VSCode • Git • Figma • Arduino IDE</div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section id="skills" class="section">
+          <h3 style="color:var(--roxo-claro);margin-bottom:10px">Skills</h3>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px">
+            <div class="card card-panel">
+              <h4 style="color:var(--roxo-claro)">Front-end</h4>
+              <div style="margin-top:10px" class="muted">HTML, CSS, JS, responsividade, animações.</div>
+            </div>
+            <div class="card card-panel">
+              <h4 style="color:var(--roxo-claro)">Hardware</h4>
+              <div style="margin-top:10px" class="muted">Arduino, sensores simples, displays 7-seg.</div>
+            </div>
+            <div class="card card-panel">
+              <h4 style="color:var(--roxo-claro)">Design</h4>
+              <div style="margin-top:10px" class="muted">Figma, prototipação e interação.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+          <h3 style="color:var(--roxo-claro);margin-bottom:10px">Contato</h3>
+          <div class="contact-grid">
+            <div class="card card-panel">
+              <form id="contactForm" onsubmit="submitContact(event)">
+                <div class="field"><label class="small muted">Nome</label><input id="nome" type="text" placeholder="Seu nome" required></div>
+                <div class="field"><label class="small muted">Email</label><input id="email" type="email" placeholder="seu@exemplo.com" required></div>
+                <div class="field"><label class="small muted">Mensagem</label><textarea id="mensagem" placeholder="Olá, quero conversar sobre..." required></textarea></div>
+                <div style="display:flex;gap:8px;align-items:center">
+                  <button type="submit" class="btn primary">Enviar Mensagem</button>
+                  <button type="button" class="btn" onclick="copyEmail()">📋 Copiar Email</button>
+                  <div id="contactFeedback" style="margin-left:6px;color:rgba(209,180,249,0.8)"></div>
+                </div>
+              </form>
+            </div>
+
+            <aside class="card card-panel">
+              <h4 style="color:var(--roxo-claro)">Me encontre</h4>
+              <div style="margin-top:8px" class="muted">
+                <div>Email: <strong id="emailText">breox@example.com</strong></div>
+                <div style="margin-top:8px">Telefone: <strong>+55 00 0 0000-0000</strong></div>
+              </div>
+              <div style="height:12px"></div>
+              <div style="display:flex;gap:8px">
+                <button class="btn" onclick="openLink('#')">LinkedIn</button>
+                <button class="btn" onclick="openLink('#')">GitHub</button>
+                <button class="btn" onclick="openLink('#')">Figma</button>
+              </div>
+              <div style="height:12px"></div>
+              <div class="muted">Dica: substitua os links por seus perfis reais.</div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap">
+            <div>© <strong style="color:var(--roxo-claro)">Breno J. Oliveira</strong></div>
+            <div class="muted">Feito com ❤ e muita roxidão</div>
+          </div>
+        </footer>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODAL DE PROJETO -->
+  <div class="modal" id="projectModal" aria-hidden="true">
+    <div class="modal-card">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS (mantive a lógica do cubo e acrescentei funções novas) -->
+  <script>
+    /* ---------- CUBO (idêntico ao seu — com fit/resize) ---------- */
+    const cube = document.getElementById("cube");
+    const click = document.getElementById("click"); // audio opcional
+    const giro = document.getElementById("giro");
+    const musica = document.getElementById("musica");
+
+    let rotateX = 0, rotateY = 0, autoRotate = true, idleTimeout, isGiroPlaying = false;
+
+    function updateRotation(){ if(cube) cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`; }
+
+    function playClick(){ if(click && click.readyState >= 2){ click.currentTime = 0; click.play().catch(()=>{}); } }
+    function tryPlayGiro(){ if(!isGiroPlaying && giro && giro.readyState >= 2){ isGiroPlaying = true; giro.currentTime = 0; giro.play().catch(()=>{}); } }
+    if(giro) giro.addEventListener('ended', ()=> isGiroPlaying = false);
+
+    function stopAutoRotate(){ autoRotate = false; clearTimeout(idleTimeout); idleTimeout = setTimeout(()=> autoRotate = true, 3000); }
+
+    function ativarMusica(){ if(musica) musica.play().catch(()=>{}); document.removeEventListener('click', ativarMusica); document.removeEventListener('touchstart', ativarMusica); }
+    document.addEventListener('click', ativarMusica);
+    document.addEventListener('touchstart', ativarMusica);
+
+    document.addEventListener('click', (e)=>{ if(e.target === document.body || e.target === cube) playClick(); });
+
+    let lastX, lastY;
+    document.addEventListener('mousemove', (e)=>{
+      stopAutoRotate();
+      if(lastX !== undefined && lastY !== undefined){
+        rotateY += (e.clientX - lastX) * 0.3;
+        rotateX -= (e.clientY - lastY) * 0.3;
+        updateRotation(); tryPlayGiro();
+      }
+      lastX = e.clientX; lastY = e.clientY;
+    });
+
+    let touchStartX, touchStartY;
+    document.addEventListener('touchstart', (e)=>{ const t = e.touches[0]; touchStartX = t.clientX; touchStartY = t.clientY; });
+    document.addEventListener('touchmove', (e)=>{
+      e.preventDefault();
+      stopAutoRotate();
+      const t = e.touches[0];
+      rotateY += (t.clientX - touchStartX) * 0.3;
+      rotateX -= (t.clientY - touchStartY) * 0.3;
+      updateRotation(); tryPlayGiro();
+      touchStartX = t.clientX; touchStartY = t.clientY;
+    }, {passive:false});
+
+    document.addEventListener('keydown',(e)=>{
+      stopAutoRotate();
+      switch(e.key){
+        case "ArrowUp": case "w": case "W": rotateX -= 10; break;
+        case "ArrowDown": case "s": case "S": rotateX += 10; break;
+        case "ArrowLeft": case "a": case "A": rotateY -= 10; break;
+        case "ArrowRight": case "d": case "D": rotateY += 10; break;
+      }
+      updateRotation(); tryPlayGiro();
+    });
+
+    setInterval(()=>{ if(autoRotate){ rotateY += 0.6; rotateX += 0.3; updateRotation(); } }, 30);
+
+    function fitCubeToViewport(){
+      const vw = window.innerWidth;
+      const navH = document.querySelector('.topbar')?.offsetHeight || 0;
+      const vhAvailable = Math.max(0, window.innerHeight - navH);
+      let scale = 0.60;
+      if(vw >= 1400) scale = 0.56;
+      else if(vw >= 1024) scale = 0.58;
+      else if(vw < 420) scale = 0.52;
+      const size = Math.floor(Math.min(vw, vhAvailable) * scale);
+      const depth = Math.floor(size / 2);
+      if(cube){
+        cube.style.width = size + "px"; cube.style.height = size + "px";
+        cube.querySelectorAll(".face").forEach(face=>{
+          face.style.width = size + "px"; face.style.height = size + "px";
+          if(face.classList.contains("front")) face.style.transform = `translateZ(${depth}px)`;
+          else if(face.classList.contains("back")) face.style.transform = `rotateY(180deg) translateZ(${depth}px)`;
+          else if(face.classList.contains("right")) face.style.transform = `rotateY(90deg) translateZ(${depth}px)`;
+          else if(face.classList.contains("left")) face.style.transform = `rotateY(-90deg) translateZ(${depth}px)`;
+          else if(face.classList.contains("top")) face.style.transform = `rotateX(90deg) translateZ(${depth}px)`;
+          else if(face.classList.contains("bottom")) face.style.transform = `rotateX(-90deg) translateZ(${depth}px)`;
+        });
+      }
+    }
+    window.addEventListener('load', fitCubeToViewport);
+    window.addEventListener('resize', fitCubeToViewport);
+    window.addEventListener('orientationchange', ()=> setTimeout(fitCubeToViewport,120));
+
+    /* ---------- FUNÇÕES DO SITE (modal, downloads, formulário) ---------- */
+    function openProject(btn){
+      const card = btn.closest('.card');
+      const dataText = card?.getAttribute('data-project');
+      if(!dataText) return;
+      const data = JSON.parse(dataText);
+      const modal = document.getElementById('projectModal');
+      const content = document.getElementById('modalContent');
+      content.innerHTML = `
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <h2 style="color:var(--roxo-claro)">${data.title}</h2>
+          <div style="color:rgba(209,180,249,0.8)">${data.tags?.join(' • ')||''}</div>
+          <div style="display:flex;gap:12px;flex-wrap:wrap">
+            <div style="flex:1">
+              <div style="height:260px;border-radius:10px;overflow:hidden;background:linear-gradient(90deg,var(--roxo-escuro),var(--roxo-medio));display:flex;align-items:center;justify-content:center">
+                <img src="${data.img||'proj1.png'}" alt="${data.title}" style="width:100%;height:100%;object-fit:cover">
+              </div>
+            </div>
+            <div style="width:320px">
+              <div class="small muted">Descrição</div>
+              <p style="margin-top:8px">${data.long || data.desc}</p>
+              <div style="margin-top:12px;display:flex;gap:8px">
+                <button class="btn primary" onclick="downloadProjetcSample('${data.img||'proj1'}')">Baixar</button>
+                <button class="btn" onclick="closeModal()">Fechar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+    }
+    function closeModal(){ const m = document.getElementById('projectModal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); }
+
+    function downloadProjetcSample(id){
+      alert('Download demo — substitua por link real. (id:'+id+')');
+    }
+
+    function submitContact(e){
+      e.preventDefault();
+      const nome = document.getElementById('nome').value;
+      const email = document.getElementById('email').value;
+      const mensagem = document.getElementById('mensagem').value;
+      const fb = document.getElementById('contactFeedback');
+      fb.textContent = 'Enviando...';
+      setTimeout(()=>{ fb.textContent = 'Mensagem enviada — obrigado, ' + (nome || ''); document.getElementById('contactForm').reset(); }, 900);
+    }
+
+    function copyEmail(){
+      const email = document.getElementById('emailText').textContent;
+      navigator.clipboard?.writeText(email).then(()=> alert('Email copiado: ' + email), ()=> alert('Não foi possível copiar'));
+    }
+
+    function openLink(u){ window.open(u,'_blank') }
+
+    /* navegação suave */
+    document.querySelectorAll('.navlinks a').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        const target = document.querySelector(href);
+        if(target) target.scrollIntoView({behavior:'smooth',block:'start'});
+      });
+    });
+    document.getElementById('scrollToPortfolio').addEventListener('click', ()=> document.getElementById('portfolio').scrollIntoView({behavior:'smooth'}));
+    document.getElementById('downloadCv').addEventListener('click', ()=> window.open('cv.pdf','_blank'));
+
+    document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeModal(); });
+
+  </script>
+</body>
+</html>

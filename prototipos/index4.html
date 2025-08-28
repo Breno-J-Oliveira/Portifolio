@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8" />
+  <title>Portfólio | Breno J. Oliveira</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Portfólio de Breno J. Oliveira — projetos, skills e contato.">
+
+  <!-- =========================================
+       CORES (FÁCIL DE EDITAR) -- altere aqui:
+       --roxo-principal: #0d0717;    /* fundo principal */
+       --roxo-escuro:   #291845;    /* painel / cards */
+       --roxo-medio:    #6e47a2;    /* glow / accents */
+       --roxo-claro:    #986ddf;    /* destaque */
+       --roxo-bem-claro:#d1b4f9;    /* texto secundário */
+       ========================================= -->
+  <style>
+    :root{
+      --roxo-principal: #0d0717;    /* fundo principal */
+      --roxo-escuro:   #291845;    /* painel / cards */
+      --roxo-medio:    #6e47a2;    /* glow / accents */
+      --roxo-claro:    #986ddf;    /* destaque */
+      --roxo-bem-claro:#d1b4f9;    /* texto secundário */
+
+      /* controles gerais */
+      --nav-height: 64px;
+      --max-width: 1200px;
+      --radius: 16px;
+      --ease: cubic-bezier(.2,.9,.2,1);
+      --glass: rgba(255,255,255,0.03);
+      --text-main: #eae7ff;
+      --muted: rgba(209,180,249,0.9);
+      --accent-strong: rgba(152,109,223,0.12);
+    }
+
+    /* ================== RESET / BASE ================== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(180deg,var(--roxo-escuro),var(--roxo-principal));
+      color: var(--text-main);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+      -webkit-tap-highlight-color: transparent;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button{font-family:inherit}
+
+    .container{ max-width:var(--max-width); margin:0 auto; padding:0 18px; }
+
+    /* ================== TOPBAR (da versão 2) ================== */
+    .topbar{
+      position:fixed; top:0; left:0; right:0; height:var(--nav-height);
+      display:flex; align-items:center; justify-content:space-between; gap:12px;
+      padding:0 22px; z-index:2200;
+      background: linear-gradient(180deg, rgba(13,7,23,0.86), rgba(13,7,23,0.66));
+      border-bottom: 1px solid rgba(209,180,249,0.06);
+      backdrop-filter: blur(6px);
+    }
+    .brand{font-weight:800;color:var(--roxo-claro);letter-spacing:0.6px;font-size:1.05rem;display:flex;gap:10px;align-items:center}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{padding:8px 12px;border-radius:10px;font-weight:700;font-size:0.95rem;color:var(--roxo-bem-claro);opacity:0.95;transition:all .18s var(--ease)}
+    .navlinks a:hover{background:var(--accent-strong);transform:translateY(-3px)}
+    .nav-cta{background:linear-gradient(90deg,var(--roxo-claro),var(--roxo-medio));color:#0b0711;padding:8px 12px;border-radius:10px;font-weight:900}
+
+    /* ================== BACKGROUND VIDEO (page1) ================== */
+    video.background{
+      position:fixed; inset:0; width:100vw; height:100vh; object-fit:cover; z-index:-10; opacity:1; filter:contrast(.9) saturate(.95);
+      transition:opacity .4s ease;
+    }
+
+    /* ================== PAGES BASE ================== */
+    section.page{ width:100%; min-height:calc(100vh - var(--nav-height)); padding-top:var(--nav-height); padding-bottom:60px; display:flex; align-items:center; justify-content:center; box-sizing:border-box }
+    .hero-inner{ width:100%; max-width:var(--max-width); display:flex; gap:28px; align-items:center; justify-content:space-between; padding:28px; box-sizing:border-box }
+
+    /* ================== CUBE (mantido do código 1) ================== */
+    .cube-wrap{ display:flex; align-items:center; justify-content:center; }
+    .scene{
+      width:600px;height:600px; position:relative; transform-style:preserve-3d; transition:transform .2s ease-out;
+    }
+    .face{
+      position:absolute; width:600px; height:600px; border-radius:18px; overflow:hidden;
+      border:3px solid rgba(209,180,249,0.06);
+      background: linear-gradient(180deg, rgba(110,71,162,0.12), rgba(41,24,69,0.22));
+      box-shadow: 0 40px 120px rgba(13,7,23,0.6), inset 0 0 80px rgba(152,109,223,0.05);
+      display:flex; align-items:center; justify-content:center;
+      transition:filter .2s, box-shadow .2s;
+    }
+    .scene:hover .face{ box-shadow: 0 60px 160px rgba(110,71,162,0.18) }
+    .face img{ width:100%; height:100%; object-fit:cover; filter:contrast(0.98) saturate(1.05) }
+
+    .front  { transform: translateZ(300px); }
+    .back   { transform: rotateY(180deg) translateZ(300px); }
+    .right  { transform: rotateY(90deg) translateZ(300px); }
+    .left   { transform: rotateY(-90deg) translateZ(300px); }
+    .top    { transform: rotateX(90deg) translateZ(300px); }
+    .bottom { transform: rotateX(-90deg) translateZ(300px); }
+
+    @media (max-width:1024px){
+      .scene{ width:76vw; height:76vw }
+      .face{ width:100%; height:100% }
+      .hero-inner{ flex-direction:column-reverse; align-items:center }
+    }
+
+    /* ================== CURRÍCULO (mantido & ampliado da v2) ================== */
+    #cv { width:100%; background: linear-gradient(180deg, rgba(11,11,11,0.0), rgba(0,0,0,0.02)); padding:20px 0; display:flex; justify-content:center }
+    .cv-wrap{ width:100%; max-width:var(--max-width); display:flex; gap:28px; align-items:flex-start; padding:24px; box-sizing:border-box; }
+    .cv-left{ flex: 0 0 460px; }
+    .cv-photo{ width:460px; height:460px; border-radius:14px; overflow:hidden; border:6px solid rgba(152,109,223,0.06); box-shadow:0 40px 120px rgba(0,0,0,0.6); }
+    .cv-photo img{ width:100%; height:100%; object-fit:cover }
+    .cv-right{ flex:1; min-width:320px }
+    .cv-panel{ background: linear-gradient(180deg, rgba(13,7,23,0.9), rgba(13,7,23,0.95)); padding:22px; border-radius:16px; box-shadow:0 20px 60px rgba(0,0,0,0.7); border:1px solid rgba(255,255,255,0.02) }
+
+    .cv-title{ font-family: "Poppins", Inter, sans-serif; font-size:2.4rem; color:var(--roxo-claro); text-align:center; margin-bottom:8px }
+    .cv-sub{ color:var(--roxo-bem-claro); text-align:center; margin-bottom:18px }
+
+    .formation-list{ display:flex; flex-direction:column; gap:12px; margin-top:12px }
+    .formation-card{ padding:16px; border-radius:12px; background:linear-gradient(180deg, rgba(152,109,223,0.04), rgba(209,180,249,0.02)); color:var(--roxo-40); font-weight:800; transition:all .16s var(--ease); border:1px solid rgba(255,255,255,0.02) }
+    .formation-card:hover{ transform:translateY(-8px); box-shadow:0 30px 80px rgba(110,71,162,0.12) }
+
+    /* centralizar títulos grandes */
+    h2.section-title{ text-align:center; font-size:1.6rem; color:var(--roxo-claro); margin-bottom:10px }
+
+    /* ================== PROJETOS (estilo v3, agora 4 por linha e maiores) ================== */
+    #portfolio{ width:100%; padding:30px 0; background: linear-gradient(180deg, var(--roxo-10, var(--roxo-escuro)), var(--roxo-principal)); }
+    .projects-grid{ width:100%; max-width:var(--max-width); margin:18px auto; display:grid; grid-template-columns:repeat(4, 1fr); gap:20px; padding:0 18px; box-sizing:border-box }
+    @media (max-width:1300px){ .projects-grid{ grid-template-columns:repeat(3,1fr) } }
+    @media (max-width:900px){ .projects-grid{ grid-template-columns:repeat(2,1fr) } }
+    @media (max-width:600px){ .projects-grid{ grid-template-columns:1fr } }
+
+    .project-card{
+      background: linear-gradient(180deg, rgba(13,7,23,0.9), rgba(13,7,23,0.95));
+      padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,0.02);
+      box-shadow:0 16px 50px rgba(0,0,0,0.6); transition:transform .18s var(--ease), box-shadow .18s var(--ease);
+      cursor:pointer; display:flex; flex-direction:column; gap:10px; min-height:340px;
+    }
+    .project-card:hover{ transform:translateY(-10px); box-shadow:0 30px 90px rgba(110,71,162,0.14) }
+    .project-thumb{ flex:0 0 220px; border-radius:12px; overflow:hidden; display:flex; align-items:center; justify-content:center; background:linear-gradient(90deg,var(--roxo-escuro),var(--roxo-medio)) }
+    .project-title{ font-weight:900; color:var(--roxo-medio); font-size:1.05rem; text-align:center; margin-top:6px }
+
+    /* ================== MODAL (melhorada: imagens + vídeo) ================== */
+    .modal{ position:fixed; inset:0; display:none; align-items:center; justify-content:center; z-index:9999; background: linear-gradient(180deg, rgba(5,4,7,0.6), rgba(5,4,7,0.9)); padding:20px }
+    .modal.open{ display:flex }
+    .modal-card{ width:min(1100px,96%); border-radius:12px; background:linear-gradient(180deg, rgba(13,7,23,0.98), rgba(13,7,23,0.98)); padding:18px; box-shadow:0 60px 180px rgba(0,0,0,0.9); color:var(--roxo-bem-claro) }
+    .modal-grid{ display:grid; grid-template-columns: 1fr 360px; gap:16px; align-items:start }
+    @media (max-width:920px){ .modal-grid{ grid-template-columns:1fr } }
+    .modal-media{ border-radius:10px; overflow:hidden; min-height:360px; background:linear-gradient(90deg,var(--roxo-escuro),var(--roxo-medio)); display:flex; align-items:center; justify-content:center }
+    .modal-thumbs{ display:flex; gap:8px; margin-top:10px; flex-wrap:wrap }
+    .thumb-mini{ width:80px; height:56px; border-radius:8px; overflow:hidden; cursor:pointer; border:2px solid rgba(255,255,255,0.02) }
+
+    /* ================== TYPEWRITER + REVEAL ================== */
+    .typewriter{ display:inline-block; }
+    .type-text{ white-space:pre-wrap }
+    .cursor{ display:inline-block; width:2px; height:1em; background:var(--roxo-claro); margin-left:8px; vertical-align:middle; animation:blink 900ms steps(1) infinite; }
+    @keyframes blink{ 0%{opacity:1} 50%{opacity:0} 100%{opacity:1} }
+
+    .reveal{ opacity:0; transform:translateY(22px); transition:opacity .6s var(--ease), transform .6s var(--ease) }
+    .reveal.in{ opacity:1; transform:none }
+
+    /* small utilities */
+    .center{text-align:center}
+    .muted{ color:var(--muted) }
+    footer{ margin-top:34px; padding:20px; text-align:center; color:var(--roxo-bem-claro); border-top:1px solid rgba(255,255,255,0.02) }
+
+    /* accessibility focus */
+    .project-card:focus{ outline: 3px solid rgba(152,109,223,0.18); outline-offset:4px; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ================== TOPBAR ================== -->
+  <header class="topbar" role="banner" aria-label="Barra do site">
+    <div class="brand" aria-hidden="false">
+      <!-- minimal logo -->
+      <svg width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="2" y="2" width="20" height="20" rx="4" fill="white" opacity="0.06"></rect>
+        <path d="M6 18L18 6" stroke="white" stroke-opacity="0.9" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      Breno J. Oliveira
+    </div>
+
+    <nav class="navlinks" role="navigation" aria-label="Menu principal">
+      <a href="#page1">Início</a>
+      <a href="#cv">Currículo</a>
+      <a href="#portfolio">Projetos</a>
+      <a href="#contact">Contato</a>
+    </nav>
+  </header>
+
+  <!-- ================== MÍDIAS (mantidas) ================== -->
+  <!-- Vídeo de fundo (page1) -->
+  <video id="bgVideo" class="background" autoplay muted loop playsinline aria-hidden="true">
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <!-- Áudios (mantidos) -->
+  <audio id="musica" loop preload="auto"><source src="fundo.mp3" type="audio/mp3"></audio>
+  <audio id="giro" preload="auto"><source src="giro.mp3" type="audio/mp3"></audio>
+  <audio id="click" preload="auto"><source src="click.mp3" type="audio/mp3"></audio>
+  <audio id="scrollSound" preload="auto"><source src="scroll.mp3" type="audio/mp3"></audio>
+  <audio id="exitSound" preload="auto"><source src="exit.mp3" type="audio/mp3"></audio>
+
+  <!-- ================== PAGE 1: CUBO (apenas cubo e fundo) ================== -->
+  <section id="page1" class="page" aria-label="Página 1 — Cubo">
+    <div class="hero-inner">
+      <div class="cube-wrap" style="width:100%;display:flex;justify-content:center;align-items:center;padding:18px">
+        <div class="scene" id="cube" role="img" aria-label="Cubo interativo">
+          <div class="face front"><img src="purple-370132_1920 (1).png" alt="Frente do cubo"></div>
+          <div class="face back"><img src="purple-370132_1920 (1).png" alt="Trás do cubo"></div>
+          <div class="face right"><img src="purple-370132_1920 (1).png" alt="Direita do cubo"></div>
+          <div class="face left"><img src="purple-370132_1920 (1).png" alt="Esquerda do cubo"></div>
+          <div class="face top"><img src="purple-370132_1920 (1).png" alt="Topo do cubo"></div>
+          <div class="face bottom"><img src="purple-370132_1920 (1).png" alt="Base do cubo"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== CURRÍCULO (camada separada) ================== -->
+  <section id="cv" class="page" aria-label="Currículo — Breno J. Oliveira">
+    <div class="cv-wrap reveal">
+      <div class="cv-left">
+        <div class="cv-photo" aria-hidden="false"><img src="me-large.jpg" alt="Foto Breno"></div>
+      </div>
+
+      <div class="cv-right">
+        <div class="cv-panel">
+          <div class="cv-title typewriter" data-type="Olá — eu sou Breno J. Oliveira">Olá — eu sou Breno J. Oliveira</div>
+          <div class="cv-sub typewriter" data-type="17 anos — Estudante de Tecnologia da Informação.">17 anos — Estudante de Tecnologia da Informação.</div>
+
+          <div style="height:12px"></div>
+
+          <div class="typewriter" data-type="Resumo Profissional"><strong>Resumo Profissional</strong></div>
+          <p class="typewriter" data-type="Aplicando conhecimento técnico e senso estético para construir projetos que resolvem problemas reais. Experiência com projetos acadêmicos, protótipos em Arduino e interfaces web responsivas.">Aplicando conhecimento técnico e senso estético para construir projetos que resolvem problemas reais. Experiência com projetos acadêmicos, protótipos em Arduino e interfaces web responsivas.</p>
+
+          <div style="height:12px"></div>
+
+          <div class="typewriter" data-type="Formações"><strong>Formações</strong></div>
+          <div class="formation-list">
+            <div class="formation-card typewriter" data-type="Curso Técnico de TI — Escola SENAI — Conclusão prevista: Dez/2026">Curso Técnico de TI — Escola SENAI — Conclusão prevista: Dez/2026</div>
+            <div class="formation-card typewriter" data-type="Curso de Informática Avançada — Escola AllNet — Conclusão: 2023">Curso de Informática Avançada — Escola AllNet — Conclusão: 2023</div>
+            <div class="formation-card typewriter" data-type="Criação de Jogos — Codezero — Conclusão: 2025">Criação de Jogos — Codezero — Conclusão: 2025</div>
+          </div>
+
+          <div style="height:12px"></div>
+
+          <div class="typewriter" data-type="Habilidades"><strong>Habilidades</strong></div>
+          <div style="display:flex;gap:22px;flex-wrap:wrap;margin-top:8px">
+            <div class="typewriter" data-type="HTML5, CSS3, JavaScript">HTML5, CSS3, JavaScript</div>
+            <div class="typewriter" data-type="Arduino, C/C++">Arduino, C/C++</div>
+            <div class="typewriter" data-type="Figma, UI">Figma, UI</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== PORTFÓLIO (projetos maiores, 4 por linha) ================== -->
+  <section id="portfolio" class="page" aria-label="Portfólio — projetos">
+    <div class="container">
+      <h2 class="section-title reveal">Projetos em Destaque</h2>
+      <p class="center muted reveal">Clique em qualquer cartão para abrir a página de detalhes (suporta imagens e vídeo).</p>
+
+      <div class="projects-grid reveal" id="projectsGrid" aria-live="polite">
+        <!-- ROW 1 (4 grandes) -->
+        <article class="project-card" tabindex="0" data-project='{"title":"Semáforo Inteligente","img":"proj1.png","imgs":["proj1.png","proj1-2.png"],"video":"","desc":"Semáforo com display 7-seg, interação pedestres e comunicação entre semáforos.","github":"https://github.com/Breno-J-Oliveira/semaforo"}'>
+          <div class="project-thumb"><img src="proj1.png" alt="Semáforo"></div>
+          <div class="project-title">Semáforo Inteligente</div>
+        </article>
+
+        <article class="project-card" tabindex="0" data-project='{"title":"Site de Download","img":"proj2.png","imgs":["proj2.png","proj2-2.png"],"video":"","desc":"Protótipo com player e opções.","github":"https://github.com/Breno-J-Oliveira/video-downloader"}'>
+          <div class="project-thumb"><img src="proj2.png" alt="Site"></div>
+          <div class="project-title">Site de Download</div>
+        </article>
+
+        <article class="project-card" tabindex="0" data-project='{"title":"Tetris 2","img":"proj3.png","imgs":["proj3.png","proj3-2.png"],"video":"proj3-demo.mp4","desc":"Remake do Tetris com mecânicas completas.","github":"https://github.com/Breno-J-Oliveira/tetris2"}'>
+          <div class="project-thumb"><img src="proj3.png" alt="Tetris"></div>
+          <div class="project-title">Tetris 2</div>
+        </article>
+
+        <article class="project-card" tabindex="0" data-project='{"title":"Protótipo Figma","img":"proj4.png","imgs":["proj4.png","proj4-2.png"],"video":"","desc":"Protótipo do app bancário.","github":"https://github.com/Breno-J-Oliveira/figma-prototype"}'>
+          <div class="project-thumb"><img src="proj4.png" alt="Figma"></div>
+          <div class="project-title">Protótipo Figma</div>
+        </article>
+
+        <!-- ROW 2 (4 grandes) -->
+        <article class="project-card" tabindex="0" data-project='{"title":"Landing Page X","img":"proj5.png","imgs":["proj5.png"],"video":"","desc":"Landing responsiva com animações.","github":"https://github.com/Breno-J-Oliveira/landing-x"}'>
+          <div class="project-thumb"><img src="proj5.png" alt="Landing"></div>
+          <div class="project-title">Landing Page X</div>
+        </article>
+
+        <article class="project-card" tabindex="0" data-project='{"title":"Protótipo Game Y","img":"proj6.png","imgs":["proj6.png"],"video":"","desc":"Protótipo interativo.","github":"https://github.com/Breno-J-Oliveira/game-y"}'>
+          <div class="project-thumb"><img src="proj6.png" alt="Demo"></div>
+          <div class="project-title">Protótipo Game Y</div>
+        </article>
+
+        <article class="project-card" tabindex="0" data-project='{"title":"Projeto A","img":"proj7.png","imgs":["proj7.png"],"video":"","desc":"Exemplo A","github":"https://github.com/Breno-J-Oliveira/projeto-a"}'>
+          <div class="project-thumb"><img src="proj7.png" alt="A"></div>
+          <div class="project-title">Projeto A</div>
+        </article>
+
+        <article class="project-card" tabindex="0" data-project='{"title":"Projeto B","img":"proj8.png","imgs":["proj8.png"],"video":"","desc":"Exemplo B","github":"https://github.com/Breno-J-Oliveira/projeto-b"}'>
+          <div class="project-thumb"><img src="proj8.png" alt="B"></div>
+          <div class="project-title">Projeto B</div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== CONTACT (do código 3, funcional) ================== -->
+  <section id="contact" class="page" aria-label="Contato">
+    <div class="container">
+      <h2 class="section-title reveal">Contato</h2>
+
+      <div style="display:grid;grid-template-columns:1fr 360px;gap:18px;margin-top:18px" class="reveal">
+        <div class="cv-panel">
+          <form id="contactForm">
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+              <div style="flex:1">
+                <label class="muted">Nome</label>
+                <input id="nome" type="text" placeholder="Seu nome" required style="width:100%;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--roxo-bem-claro)">
+              </div>
+              <div style="width:260px">
+                <label class="muted">Email</label>
+                <input id="email" type="email" placeholder="seu@exemplo.com" required style="width:100%;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--roxo-bem-claro)">
+              </div>
+            </div>
+
+            <div style="margin-top:12px">
+              <label class="muted">Mensagem</label>
+              <textarea id="mensagem" placeholder="Olá, quero conversar sobre..." required style="width:100%;padding:10px;border-radius:8px;background:transparent;border:1px solid rgba(255,255,255,0.03);color:var(--roxo-bem-claro);min-height:120px"></textarea>
+            </div>
+
+            <div style="display:flex;gap:8px;margin-top:12px;align-items:center">
+              <button type="submit" class="nav-cta">Enviar Mensagem</button>
+              <button type="button" id="copyEmailBtn" class="btn" style="background:var(--glass);">📋 Copiar email</button>
+              <div id="contactFeedback" style="margin-left:8px;color:var(--muted)"></div>
+            </div>
+          </form>
+        </div>
+
+        <aside class="cv-panel">
+          <h4 style="color:var(--roxo-claro)">Me encontre</h4>
+          <div style="margin-top:8px;color:var(--roxo-bem-claro)">
+            <div>Email: <strong id="emailText">breno.emailsenai@gmail.com</strong></div>
+            <div style="margin-top:8px">Telefone: <strong>+55 11 91577-2115</strong></div>
+          </div>
+
+          <div style="height:12px"></div>
+          <div style="display:flex;gap:8px;align-items:center">
+            <button class="btn" onclick="openLink('https://github.com/Breno-J-Oliveira')">GitHub</button>
+            <button class="btn" onclick="openLink('https://www.linkedin.com/in/seu-link')">LinkedIn</button>
+            <button class="btn" onclick="openLink('https://www.instagram.com/seu-perfil')">Instagram</button>
+          </div>
+
+          <div style="height:12px"></div>
+          <div class="muted">Dica: substitua os links por seus perfis reais.</div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================== PROJECT DETAIL MODAL ================== -->
+  <div id="projectModal" class="modal" aria-hidden="true" role="dialog" aria-label="Detalhes do projeto">
+    <div class="modal-card" role="document">
+      <button id="closeModalBtn" class="modal-close" style="float:right;background:none;border:none;color:var(--roxo-bem-claro);font-size:20px;padding:6px">✕</button>
+      <div id="modalContent">
+        <!-- preenchido dinamicamente -->
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div>© <strong style="color:var(--roxo-claro)">Breno J. Oliveira</strong> — Feito com 💜</div>
+  </footer>
+
+  <!-- ================== SCRIPTS (interatividade e correções) ================== -->
+  <script>
+    /* ===================================================================================
+       Objetivo:
+       - Manter todo o conteúdo original (não removi nada)
+       - Corrigir typewriter para NÃO "sumir" o texto antes de digitar
+       - Controlar áudio sem bugs (start após interação; não reinicia frequentemente)
+       - Modal multimídia (várias imagens + vídeo)
+       - Projetos: abrir modal ao clicar em cartão (sem botão extra)
+       - Efeitos reveal ao rolar
+       =================================================================================== */
+
+    // ---------------------------
+    // Helpers utilitários
+    // ---------------------------
+    const $ = sel => document.querySelector(sel);
+    const $$ = sel => Array.from(document.querySelectorAll(sel));
+    const clamp = (v,min,max) => Math.min(max, Math.max(min,v));
+
+    // ---------------------------
+    // TYPEWRITER / REVEAL (robusta)
+    // - cada elemento .typewriter recebe data-type (se já estiver, usamos)
+    // - as strings originais permanecem no HTML por acessibilidade; quando ativamos o efeito,
+    //   colocamos o texto em span.type-text e animamos sem remover outros children.
+    // ---------------------------
+    function initTypewriters(){
+      // prepare each .typewriter element: store full text in data-type if not set
+      $$('.typewriter').forEach(el => {
+        if (!el.dataset.type) {
+          // prefer data-type attribute, otherwise take textContent (trim)
+          el.dataset.type = (el.textContent || '').trim();
+        }
+        // only if not already prepared
+        if (!el.dataset.twPrepared) {
+          // replace visible text with a span container (but keep original as fallback in dataset)
+          const full = el.dataset.type;
+          el.dataset.twPrepared = '1';
+          // reset innerHTML to controlled spans while preserving any inline HTML? we'll overwrite to be consistent
+          el.innerHTML = `<span class="type-text" aria-hidden="false"></span><span class="cursor" aria-hidden="true"></span>`;
+        }
+      });
+    }
+
+    function typeOnce(el, speedBase = 18){
+      return new Promise(resolve => {
+        if (!el || el.dataset.twDone === '1') return resolve();
+        const full = el.dataset.type || '';
+        const span = el.querySelector('.type-text');
+        const cursor = el.querySelector('.cursor');
+        if (!span) {
+          // fallback: directly set text
+          el.textContent = full;
+          el.dataset.twDone = '1';
+          return resolve();
+        }
+        el.dataset.twDone = '1';
+        let i = 0;
+        function step(){
+          if (i <= full.length){
+            span.textContent = full.slice(0, i);
+            i++;
+            const random = Math.floor(Math.random() * 28);
+            setTimeout(step, speedBase + random);
+          } else {
+            // finished
+            setTimeout(()=> { cursor.style.opacity = '0.95'; }, 120);
+            resolve();
+          }
+        }
+        step();
+      });
+    }
+
+    // Reveal observer: adds class 'in' when visible and triggers typing of any typewriter children
+    function setupRevealTyping(){
+      initTypewriters();
+
+      const revealEls = $$('.reveal');
+      const obs = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting){
+            entry.target.classList.add('in');
+            // type any .typewriter children of this reveal
+            const tws = Array.from(entry.target.querySelectorAll('.typewriter'));
+            // chain typing for nicer effect
+            let chain = Promise.resolve();
+            tws.forEach(tw => chain = chain.then(()=> typeOnce(tw)));
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.18 });
+
+      revealEls.forEach(el => obs.observe(el));
+
+      // also type standalone typewriter elements that are immediately visible (not inside reveal)
+      $$('.typewriter').forEach(el => {
+        if (el.closest('.reveal')) return; // handled by observer
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0){
+          typeOnce(el);
+        }
+      });
+    }
+
+    // ---------------------------
+    // AUDIO MANAGEMENT (fixa o bug de entrar/saindo)
+    // - Aplica "unlock" de áudio apenas UMA vez quando o usuário interage (click/touch/keydown)
+    // - Não tenta re-play repetidamente; background music toca em loop e efeitos são reproduzidos quando solicitados
+    // ---------------------------
+    const audio = {
+      mus: document.getElementById('musica'),
+      giro: document.getElementById('giro'),
+      click: document.getElementById('click'),
+      scroll: document.getElementById('scrollSound'),
+      exit: document.getElementById('exitSound'),
+      unlocked: false
+    };
+
+    function unlockAudioOnce(){
+      if (audio.unlocked) return;
+      audio.unlocked = true;
+      // try to play background music softly
+      if (audio.mus){
+        audio.mus.volume = 0.9;
+        audio.mus.loop = true;
+        audio.mus.play().catch(()=> { /* some browsers still block until gesture but we tried */ });
+      }
+    }
+
+    // Attach only once
+    function attachAudioUnlockers(){
+      const unlock = () => unlockAudioOnce();
+      ['click','touchstart','keydown'].forEach(evt => document.addEventListener(evt, unlock, { once:true }));
+    }
+
+    // play effect safely (no exceptions)
+    function playEffect(el){
+      try {
+        if (!el) return;
+        el.currentTime = 0;
+        el.play().catch(()=>{});
+      } catch(e){}
+    }
+
+    // throttle helper for scroll sound
+    function throttle(fn, wait){
+      let last = 0;
+      return function(...args){
+        const now = Date.now();
+        if (now - last > wait){
+          last = now;
+          fn.apply(this, args);
+        }
+      };
+    }
+
+    // ---------------------------
+    // CUBE INTERACTION (mantive a lógica e acrescentei som)
+    // ---------------------------
+
+    function setupCube(){
+      const cube = document.getElementById('cube');
+      if (!cube) return;
+      let rotateX = 0, rotateY = 0, lastX, lastY, autoRotate = true;
+
+      function update(){
+        cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+      }
+
+      document.addEventListener('mousemove', (e)=>{
+        autoRotate = false;
+        if (lastX !== undefined && lastY !== undefined){
+          rotateY += (e.clientX - lastX) * 0.25;
+          rotateX -= (e.clientY - lastY) * 0.25;
+          update();
+          playEffect(audio.giro);
+        }
+        lastX = e.clientX; lastY = e.clientY;
+      });
+
+      let touchStartX, touchStartY;
+      document.addEventListener('touchstart', (e)=>{ const t = e.touches[0]; touchStartX = t.clientX; touchStartY = t.clientY; });
+      document.addEventListener('touchmove', (e)=>{ e.preventDefault(); const t = e.touches[0]; rotateY += (t.clientX - touchStartX) * 0.25; rotateX -= (t.clientY - touchStartY) * 0.25; update(); touchStartX = t.clientX; touchStartY = t.clientY; playEffect(audio.giro); }, { passive:false });
+
+      document.addEventListener('keydown', (e)=>{
+        autoRotate = false;
+        switch(e.key){
+          case "ArrowUp": case "w": rotateX -= 10; break;
+          case "ArrowDown": case "s": rotateX += 10; break;
+          case "ArrowLeft": case "a": rotateY -= 10; break;
+          case "ArrowRight": case "d": rotateY += 10; break;
+        }
+        update();
+        playEffect(audio.giro);
+      });
+
+      setInterval(()=>{ if (autoRotate){ rotateY += 0.6; rotateX += 0.3; update(); } }, 30);
+
+      // click sound on clicks in document body
+      document.addEventListener('click', (e)=>{
+        if (e.target === document.body || e.target === cube || e.target.closest('.project-card')) playEffect(audio.click);
+      });
+    }
+
+    // ---------------------------
+    // PROJECTS: abrir modal com galeria (imagens e vídeo)
+    // - Ao clicar em .project-card, pegamos o atributo data-project (JSON) e construímos modal
+    // - Modal inclui miniaturas clicáveis, título, descrição e link GitHub (se existir)
+    // ---------------------------
+    function setupProjects(){
+      const cards = $$('.project-card');
+      const modal = $('#projectModal');
+      const modalContent = $('#modalContent');
+      cards.forEach(card => {
+        card.addEventListener('click', () => {
+          const raw = card.dataset.project || '{}';
+          let data = {};
+          try { data = JSON.parse(raw); } catch(e){ data = { title:'Projeto', desc:'Sem descrição' }; }
+          const title = data.title || 'Projeto';
+          const desc = data.desc || data.long || '';
+          const imgs = Array.isArray(data.imgs) ? data.imgs.slice() : (data.img ? [data.img] : []);
+          const video = data.video || '';
+          const github = data.github || '';
+
+          // build modal HTML
+          let mediaHtml = '';
+          if (video){
+            mediaHtml += `<video controls playsinline style="width:100%;height:100%;object-fit:contain"><source src="${video}" type="video/mp4"></video>`;
+          } else if (imgs.length){
+            mediaHtml += `<img src="${imgs[0]}" alt="${escapeHtml(title)}" style="width:100%;height:100%;object-fit:cover">`;
+          } else {
+            mediaHtml += `<div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;color:var(--muted)">Sem mídia</div>`;
+          }
+
+          // thumbnails
+          let thumbsHtml = '';
+          imgs.forEach((src, idx) => {
+            thumbsHtml += `<div class="thumb-mini" role="button" data-src="${src}" tabindex="0"><img src="${src}" alt="" style="width:100%;height:100%;object-fit:cover"></div>`;
+          });
+          if (video){
+            thumbsHtml = `<div class="thumb-mini" role="button" data-type="video" data-src="${video}" tabindex="0" style="display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.12);color:var(--roxo-bem-claro)">▶</div>` + thumbsHtml;
+          }
+
+          modalContent.innerHTML = `
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <h2 style="margin:0;color:var(--roxo-claro)">${escapeHtml(title)}</h2>
+              <div style="display:grid;grid-template-columns:1fr 320px;gap:12px;margin-top:8px">
+                <div>
+                  <div class="modal-media" id="modalMedia">${mediaHtml}</div>
+                  <div class="modal-thumbs" id="modalThumbs">${thumbsHtml}</div>
+                </div>
+                <div>
+                  <div style="color:var(--roxo-bem-claro)">${escapeHtml(desc)}</div>
+                  <div style="height:12px"></div>
+                  <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    ${ github ? `<button class="nav-cta" onclick="openExternal('${escapeHtml(github)}')">Ver no GitHub</button>` : '' }
+                    <button class="btn" onclick="closeProjectModal()">Fechar</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          `;
+
+          // show modal
+          modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+          // attach thumbs listeners
+          const thumbs = modalContent.querySelectorAll('.thumb-mini');
+          thumbs.forEach(t => {
+            t.addEventListener('click', () => {
+              const src = t.dataset.src;
+              const type = t.dataset.type;
+              const media = $('#modalMedia');
+              if (type === 'video') {
+                media.innerHTML = `<video controls playsinline style="width:100%;height:100%;object-fit:contain"><source src="${src}" type="video/mp4"></video>`;
+              } else {
+                media.innerHTML = `<img src="${src}" alt="" style="width:100%;height:100%;object-fit:cover">`;
+              }
+            });
+            t.addEventListener('keydown', (e) => { if (e.key === 'Enter') t.click(); });
+          });
+
+          // typewriter title in modal (for effect)
+          const modalTitle = modalContent.querySelector('h2');
+          if (modalTitle){
+            modalTitle.classList.add('typewriter');
+            modalTitle.dataset.type = modalTitle.textContent;
+            modalTitle.innerHTML = `<span class="type-text"></span><span class="cursor"></span>`;
+            typeOnce(modalTitle, 12);
+          }
+
+          // play a subtle open sound
+          playEffect(audio.click);
+        });
+
+        // accessibility: open by pressing Enter when focused
+        card.addEventListener('keydown', (e)=> { if (e.key === 'Enter') card.click(); });
+      });
+
+      // close modal button
+      $('#closeModalBtn')?.addEventListener('click', closeProjectModal);
+      // close by clicking outside
+      document.getElementById('projectModal')?.addEventListener('click', (e)=>{
+        if (e.target === document.getElementById('projectModal')) closeProjectModal();
+      });
+      // ESC to close
+      document.addEventListener('keydown', (e)=>{ if (e.key === 'Escape') closeProjectModal(); });
+
+      function closeProjectModal(){
+        const m = document.getElementById('projectModal');
+        if (!m) return;
+        m.classList.remove('open');
+        m.setAttribute('aria-hidden','true');
+        playEffect(audio.exit);
+      }
+      // expose helper globally for git button
+      window.closeProjectModal = closeProjectModal;
+      window.openExternal = (url) => window.open(url, '_blank');
+    }
+
+    // ---------------------------
+    // NAV: smooth scroll
+    // ---------------------------
+    function setupNav(){
+      $$('.navlinks a').forEach(a => {
+        a.addEventListener('click', (e)=>{
+          e.preventDefault();
+          const href = a.getAttribute('href');
+          const target = document.querySelector(href);
+          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          playEffect(audio.click);
+        });
+      });
+    }
+
+    // ---------------------------
+    // CONTACT FORM / UTILS
+    // ---------------------------
+    function setupContact(){
+      $('#contactForm')?.addEventListener('submit', (e)=>{
+        e.preventDefault();
+        const nome = $('#nome')?.value || '';
+        const email = $('#email')?.value || '';
+        const msg = $('#mensagem')?.value || '';
+        $('#contactFeedback').textContent = 'Enviando...';
+        playEffect(audio.click);
+        setTimeout(()=> {
+          $('#contactFeedback').textContent = 'Mensagem enviada — obrigado, ' + (nome || '');
+          $('#contactForm').reset();
+        }, 900);
+      });
+
+      $('#copyEmailBtn')?.addEventListener('click', ()=>{
+        const em = $('#emailText')?.textContent || 'breno.emailsenai@gmail.com';
+        navigator.clipboard?.writeText(em).then(()=> {
+          alert('Email copiado: ' + em);
+          playEffect(audio.click);
+        }).catch(()=> {
+          prompt('Copiar manualmente:', em);
+        });
+      });
+    }
+
+    // ---------------------------
+    // SCROLL SOUNDS (throttled)
+    // ---------------------------
+    function setupScrollSound(){
+      const playScroll = throttle(()=> {
+        // short subtle sound
+        playEffect(audio.scroll);
+      }, 600);
+      window.addEventListener('wheel', (e)=> {
+        if (Math.abs(e.deltaY) > 10) playScroll();
+      }, { passive: true });
+    }
+
+    // ---------------------------
+    // FIT CUBE TO VIEWPORT (preserve original behavior)
+    // ---------------------------
+    function fitCubeToViewport(){
+      const cube = document.getElementById('cube');
+      if (!cube) return;
+      const vw = window.innerWidth;
+      const navH = document.querySelector('.topbar')?.offsetHeight || 0;
+      const vhAvailable = Math.max(0, window.innerHeight - navH);
+      let scale = 0.58;
+      if (vw >= 1400) scale = 0.52;
+      else if (vw >= 1024) scale = 0.56;
+      else if (vw < 420) scale = 0.5;
+      const size = Math.floor(Math.min(vw, vhAvailable) * scale);
+      const depth = Math.floor(size / 2);
+      cube.style.width = size + "px";
+      cube.style.height = size + "px";
+      cube.querySelectorAll('.face').forEach(face=>{
+        face.style.width = size + "px";
+        face.style.height = size + "px";
+        if (face.classList.contains('front')) face.style.transform = `translateZ(${depth}px)`;
+        else if (face.classList.contains('back')) face.style.transform = `rotateY(180deg) translateZ(${depth}px)`;
+        else if (face.classList.contains('right')) face.style.transform = `rotateY(90deg) translateZ(${depth}px)`;
+        else if (face.classList.contains('left')) face.style.transform = `rotateY(-90deg) translateZ(${depth}px)`;
+        else if (face.classList.contains('top')) face.style.transform = `rotateX(90deg) translateZ(${depth}px)`;
+        else if (face.classList.contains('bottom')) face.style.transform = `rotateX(-90deg) translateZ(${depth}px)`;
+      });
+    }
+
+    // ---------------------------
+    // UTIL: escape html
+    // ---------------------------
+    function escapeHtml(s){
+      return String(s || '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+    }
+
+    // ---------------------------
+    // INIT
+    // ---------------------------
+    function initAll(){
+      attachAudioUnlockers();
+      setupRevealTyping();
+      setupCube();
+      setupProjects();
+      setupNav();
+      setupContact();
+      setupScrollSound();
+      fitCubeToViewport();
+
+      // Start background music when page1 is in view (but only after user gesture)
+      const bgVideo = document.getElementById('bgVideo');
+      const page1 = document.getElementById('page1');
+      if (page1 && audio.mus){
+        const obs = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && audio.unlocked){
+              // ensure music is playing
+              audio.mus.play().catch(()=>{});
+            }
+          });
+        }, { threshold: [0.25, 0.35, 0.6] });
+        obs.observe(page1);
+      }
+
+      // when audio unlocked, try to play music
+      document.addEventListener('click', ()=> {
+        if (audio.unlocked && audio.mus && audio.mus.paused) audio.mus.play().catch(()=>{});
+      }, { once:true });
+
+      // ensure typewriters prepared (in case some elements are not inside reveal)
+      initTypewriters();
+
+      // small accessibility tweak: focus first project when pressing Tab on page load
+      setTimeout(()=> { const p = document.querySelector('.project-card'); if (p) p.setAttribute('tabindex','0'); }, 400);
+    }
+
+    // handle resize
+    window.addEventListener('resize', () => {
+      fitCubeToViewport();
+    });
+
+    document.addEventListener('DOMContentLoaded', initAll);
+
+  </script>
+</body>
+</html>

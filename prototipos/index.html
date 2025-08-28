@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ==========================================
+       BLOCO 1 — META E CONFIGURAÇÕES INICIAIS
+  ========================================== -->
+  <meta charset="UTF-8" />
+  <title>Pórtifolio| Breno J. Oliveira</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- ==========================================
+       BLOCO 2 — ESTILOS (CSS)
+  ========================================== -->
+  <style>
+    /* reset / base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html,body { height: 100%; }
+    :root {
+      --nav-height: 30px; /* ajustar aqui a altura da barra */
+    }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: black;
+      color: #2d2b3a;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      touch-action: none;
+    }
+
+    /* --- ADIÇÃO: topbar minimalista branca (fixa) --- */
+    .topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: var(--nav-height);
+      background: #403d50;
+      color: #0b0b0b;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 20px;
+      z-index: 60;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      backdrop-filter: blur(6px);
+    }
+    .topbar .brand {
+      font-weight: 700;
+      letter-spacing: 0.6px;
+    }
+    .topbar .navlinks {
+      display: flex;
+      gap: 14px;
+      align-items: center;
+    }
+    .topbar .navlinks a {
+      text-decoration: none;
+      color: inherit;
+      font-weight: 600;
+      font-size: 14px;
+      opacity: 0.92;
+      padding: 8px 10px;
+      border-radius: 8px;
+    }
+    .topbar .navlinks a:hover {
+      background: rgba(0,0,0,0.06);
+    }
+    /* --- FIM topbar --- */
+
+    /* vídeo de fundo (fixo) */
+    video.background {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -1;
+    }
+
+    /* layout das "páginas" (cada uma ocupa 100vh menos a barra) */
+    .page {
+      width: 100%;
+      min-height: calc(100vh);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      box-sizing: border-box;
+    }
+
+    /* === PAGE 1 (CUBO) === */
+    .hero {
+      /* --- AJUSTE: hero height -= nav --- */
+      /* ocupa a viewport restante abaixo da barra para manter top limpo */
+      height: calc(100vh - var(--nav-height));
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 2000px;
+      box-sizing: border-box;
+      margin-top: var(--nav-height); /* empurra conteúdo para baixo da barra */
+    }
+
+    /* cubo (mantive classes originais) */
+    .scene {
+      width: 600px;
+      height: 600px;
+      position: relative;
+      transform-style: preserve-3d;
+      transition: transform 0.2s ease-out;
+    }
+
+    @media (max-width: 1024px) {
+      .scene { width: 80vw; height: 80vw; }
+      .face { width: 100%; height: 100%; }
+    }
+
+    .face {
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border: 2px solid rgba(222, 199, 199, 0.3);
+      box-shadow: 0 0 60px rgba(255, 255, 255, 0.7);
+      filter: brightness(1.3) contrast(1.4);
+      transition: filter .3s ease, box-shadow .3s ease;
+      overflow: hidden;
+      background: #111;
+    }
+
+    .scene:hover .face {
+      filter: brightness(1.8) contrast(2);
+      box-shadow: 0 0 120px rgba(255,255,255,1);
+    }
+
+    .face img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .front  { transform: translateZ(300px); }
+    .back   { transform: rotateY(180deg) translateZ(300px); }
+    .right  { transform: rotateY(90deg) translateZ(300px); }
+    .left   { transform: rotateY(-90deg) translateZ(300px); }
+    .top    { transform: rotateX(90deg) translateZ(300px); }
+    .bottom { transform: rotateX(-90deg) translateZ(300px); }
+
+    /* === PAGE 2 (PORTFÓLIO) === */
+    .portfolio {
+      background-color: #0b0b0b; /* cobre o vídeo de fundo nessa área */
+      padding: 12px 20px 80px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: calc(100vh - var(--nav-height));
+      margin-top: var(--nav-height);
+      box-sizing: border-box;
+    }
+
+    /* divisor branco full-width com texto dentro */
+    .divider {
+      width: 100%;
+      height: 64px;              /* área reservada */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      margin-bottom: 28px;
+    }
+
+    .divider .bar {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100vw;             /* ocupa toda a largura */
+      height: 100px;             /* grossura da linha */
+      background: #fff;
+      border-radius: 16px;
+      box-shadow: 0 0 22px rgba(255,255,255,0.12);
+      z-index: 1;
+    }
+
+    .divider h2 {
+      position: relative;
+      z-index: 2;
+      margin: 0;
+      color: #0b0b0b;           /* texto escuro sobre barra branca */
+      font-size: 22px;
+      font-weight: 700;
+      padding: 0 16px;
+      pointer-events: none;
+    }
+
+    .portfolio-content {
+      width: 100%;
+      max-width: 800px;
+      color: #ddd;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    /* responsividade fina */
+    @media (max-width:420px){
+      .divider { height: 56px; }
+      .divider .bar { height: 24px; }
+      .divider h2 { font-size: 18px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ==========================================
+       BLOCO 3 — TOPBAR (HEADER)
+  ========================================== -->
+  <!-- --- Topbar minimalista branca --- -->
+  <header class="topbar" role="banner" aria-label="Barra do site">
+    <div class="brand">Breno J. Oliveira</div>
+  </header>
+
+  <!-- ==========================================
+       BLOCO 4 — MÍDIA DE FUNDO (VÍDEO + ÁUDIOS)
+  ========================================== -->
+  <!-- Vídeo de fundo (fixo) -->
+  <video class="background" autoplay muted loop>
+    <source src="video.mp4" type="video/mp4">
+  </video>
+
+  <!-- Áudios (mantidos) -->
+  <audio id="musica" loop><source src="fundo.mp3" type="audio/mp3"></audio>
+  <audio id="giro"><source src="giro.mp3" type="audio/mp3"></audio>
+  <audio id="click"><source src="click.mp3" type="audio/mp3"></audio>
+
+  <!-- ==========================================
+       BLOCO 5 — PAGE 1 (CUBO)
+  ========================================== -->
+  <!-- === PAGE 1 (CUBO) === -->
+  <section id="page1" class="page hero" aria-label="Página 1 — Cubo">
+    <div class="scene" id="cube">
+      <div class="face front"><img src="purple-370132_1920 (1).png" alt="Frente"></div>
+      <div class="face back"><img src="purple-370132_1920 (1).png" alt="Trás"></div>
+      <div class="face right"><img src="purple-370132_1920 (1).png" alt="Direita"></div>
+      <div class="face left"><img src="purple-370132_1920 (1).png" alt="Esquerda"></div>
+      <div class="face top"><img src="purple-370132_1920 (1).png" alt="Topo"></div>
+      <div class="face bottom"><img src="purple-370132_1920 (1).png" alt="Base"></div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BLOCO 6 — PAGE 2 (PORTFÓLIO)
+  ========================================== -->
+  <!-- === PAGE 2 (PORTFÓLIO) === -->
+  <section id="page2" class="page portfolio" aria-label="Página 2 — Portfólio">
+    <div class="divider" aria-hidden="false">
+      <h2>AAAAAAAAAAA</h2>
+      <div class="bar" role="presentation"></div>
+    </div>
+
+    <div class="portfolio-content">
+      <!--
+        COMECE AQUI: adicione todo o conteúdo da sua Página 2 dentro desta div.
+        Exemplo: cards, seções de texto, botões, formulários, etc.
+        Isso está isolado do cubo — editar aqui não afeta a lógica do cubo em page1.
+      -->
+      <p style="color:#bbb;margin-bottom:12px;">Esta é a Página 2 — aqui você pode colocar seu currículo, projetos e outros elementos sem tocar na Página 1.</p>
+
+      <!-- Exemplo de bloco (apague quando não precisar) -->
+      <section style="margin-top:18px;background:transparent;padding:18px;border-radius:10px;">
+        <h3 style="color:#fff;margin-bottom:8px;">Exemplo de conteúdo</h3>
+        <p style="color:#ccc;">Substitua este bloco com seus cards/links/descrições.</p>
+      </section>
+
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BLOCO 7 — SCRIPTS (LÓGICA DO CUBO)
+  ========================================== -->
+  <script>
+    /* ==========================================
+       BLOCO 7.1 — VARIÁVEIS E ELEMENTOS DO DOM
+    ========================================== */
+    /* === LÓGICA DO CUBO (mantida) === */
+    const cube = document.getElementById("cube");
+    const click = document.getElementById("click");
+    const giro = document.getElementById("giro");
+    const musica = document.getElementById("musica");
+
+    /* ==========================================
+       BLOCO 7.2 — ESTADO E CONTROLES (ROTATION / FLAGS)
+    ========================================== */
+    let rotateX = 0;
+    let rotateY = 0;
+    let autoRotate = true;
+    let idleTimeout;
+    let isGiroPlaying = false;
+
+    /* ==========================================
+       BLOCO 7.3 — FUNÇÕES AUXILIARES
+    ========================================== */
+    function updateRotation() {
+      cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+
+    function playClick() {
+      if (click && click.readyState >= 2) {
+        click.currentTime = 0;
+        click.play().catch(()=>{});
+      }
+    }
+
+    function tryPlayGiro() {
+      if (!isGiroPlaying && giro.readyState >= 2) {
+        isGiroPlaying = true;
+        giro.currentTime = 0;
+        giro.play().catch(()=>{});
+      }
+    }
+
+    giro.addEventListener("ended", () => { isGiroPlaying = false; });
+
+    function stopAutoRotate(){
+      autoRotate = false;
+      clearTimeout(idleTimeout);
+      idleTimeout = setTimeout(()=> autoRotate = true, 3000);
+    }
+
+    function ativarMusica() {
+      musica.play().catch(()=>{});
+      document.removeEventListener("click", ativarMusica);
+      document.removeEventListener("touchstart", ativarMusica);
+    }
+
+    /* ==========================================
+       BLOCO 7.4 — EVENTOS DE INICIALIZAÇÃO E INPUTS
+    ========================================== */
+    document.addEventListener("click", ativarMusica);
+    document.addEventListener("touchstart", ativarMusica);
+
+    document.addEventListener("click", (e)=>{
+      if (e.target === document.body || e.target === cube) playClick();
+    });
+
+    let lastX, lastY;
+    document.addEventListener("mousemove", (e)=>{
+      stopAutoRotate();
+      if (lastX!==undefined && lastY!==undefined){
+        rotateY += (e.clientX - lastX) * 0.3;
+        rotateX -= (e.clientY - lastY) * 0.3;
+        updateRotation();
+        tryPlayGiro();
+      }
+      lastX = e.clientX; lastY = e.clientY;
+    });
+
+    let touchStartX, touchStartY;
+    document.addEventListener("touchstart", (e)=>{
+      const touch = e.touches[0];
+      touchStartX = touch.clientX; touchStartY = touch.clientY;
+    });
+
+    document.addEventListener("touchmove", (e)=>{
+      e.preventDefault();
+      stopAutoRotate();
+      const touch = e.touches[0];
+      const deltaX = touch.clientX - touchStartX;
+      const deltaY = touch.clientY - touchStartY;
+      rotateY += deltaX * 0.3;
+      rotateX -= deltaY * 0.3;
+      updateRotation();
+      tryPlayGiro();
+      touchStartX = touch.clientX; touchStartY = touch.clientY;
+    }, { passive:false });
+
+    document.addEventListener("keydown",(e)=>{
+      stopAutoRotate();
+      switch(e.key){
+        case "ArrowUp": case "w": case "W": rotateX -= 10; break;
+        case "ArrowDown": case "s": case "S": rotateX += 10; break;
+        case "ArrowLeft": case "a": case "A": rotateY -= 10; break;
+        case "ArrowRight": case "d": case "D": rotateY += 10; break;
+      }
+      updateRotation(); tryPlayGiro();
+    });
+
+    /* ==========================================
+       BLOCO 7.5 — LOOP DE ROTAÇÃO AUTOMÁTICA
+    ========================================== */
+    setInterval(()=>{
+      if (autoRotate){ rotateY += 0.6; rotateX += 0.3; updateRotation(); }
+    }, 30);
+
+    /* ==========================================
+       BLOCO 7.6 — AJUSTE DO CUBO PARA A VIEWPORT
+    ========================================== */
+    /* === ADIÇÃO: fitCubeToViewport (ajustado para considerar a altura da barra) === */
+    function fitCubeToViewport(){
+      const vw = window.innerWidth;
+      // calcula altura disponível subtraindo a altura real da topbar (se existir)
+      const topbar = document.querySelector('.topbar');
+      const navH = topbar ? topbar.offsetHeight : 0;
+      const vhAvailable = Math.max(0, window.innerHeight - navH);
+
+      let scale = 0.60;
+      if (vw >= 1400) scale = 0.56;
+      else if (vw >= 1024) scale = 0.58;
+      else if (vw < 420) scale = 0.54;
+
+      // usa a menor dimensão entre largura e altura disponível
+      const size = Math.floor(Math.min(vw, vhAvailable) * scale);
+      const depth = Math.floor(size / 2);
+
+      if (cube){
+        cube.style.width = size + "px";
+        cube.style.height = size + "px";
+        const faces = cube.querySelectorAll(".face");
+        faces.forEach(face=>{
+          face.style.width = size + "px";
+          face.style.height = size + "px";
+          if (face.classList.contains("front")) face.style.transform = `translateZ(${depth}px)`;
+          else if (face.classList.contains("back")) face.style.transform = `rotateY(180deg) translateZ(${depth}px)`;
+          else if (face.classList.contains("right")) face.style.transform = `rotateY(90deg) translateZ(${depth}px)`;
+          else if (face.classList.contains("left")) face.style.transform = `rotateY(-90deg) translateZ(${depth}px)`;
+          else if (face.classList.contains("top")) face.style.transform = `rotateX(90deg) translateZ(${depth}px)`;
+          else if (face.classList.contains("bottom")) face.style.transform = `rotateX(-90deg) translateZ(${depth}px)`;
+        });
+      }
+    }
+    window.addEventListener("load", fitCubeToViewport);
+    window.addEventListener("resize", fitCubeToViewport);
+    window.addEventListener("orientationchange", ()=> setTimeout(fitCubeToViewport,120));
+
+    /* ==========================================
+       BLOCO 7.7 — NAVEGAÇÃO SUAVE (TOPBAR LINKS)
+    ========================================== */
+    /* navegação suave dos links da topbar */
+    document.querySelectorAll('.topbar .navlinks a').forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        const target = document.querySelector(href);
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+  </script>
+</body>
+</html>

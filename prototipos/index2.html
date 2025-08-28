@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <!-- ==========================================
+       BLOCO 1 — META E CONFIGURAÇÕES INICIAIS
+  ========================================== -->
+  <meta charset="utf-8" />
+  <title>Portfólio | Breno J. Oliveira</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Portfólio de Breno J. Oliveira - projetos, currículo, bio e contato.">
+
+  <!-- ==========================================
+       BLOCO 2 — ESTILOS (CSS)
+  ========================================== -->
+  <style>
+    /* ===============================
+       PALETA E VARIÁVEIS GLOBAIS
+       =============================== */
+    :root{
+      --roxo-00: #0d0717;   /* fundo muito escuro (muito escuro) */
+      --roxo-10: #291845;   /* roxo escuro (aquele mais escuro que você pediu p/ fundo geral) */
+      --roxo-20: #3b1e54;
+      --roxo-30: #6e47a2;   /* roxo médio */
+      --roxo-40: #986ddf;   /* roxo claro (destaque) */
+      --roxo-50: #d1b4f9;   /* lilás (mais claro p/ textos sobre fundos escuros) */
+      --glass: rgba(255,255,255,0.03);
+      --glass-2: rgba(255,255,255,0.02);
+      --nav-height: 64px;
+      --max-width: 1200px;
+      --radius: 16px;
+      --ease: cubic-bezier(.2,.9,.2,1);
+    }
+
+    /* ===============================
+       RESET E BASE
+       =============================== */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      /* agora o fundo padrão (fora do vídeo) será o roxo mais escuro pedido */
+      background: linear-gradient(180deg, var(--roxo-10), var(--roxo-00));
+      color: var(--roxo-10); /* textos por padrão: roxo escuro */
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button{font-family:inherit}
+
+    /* ===============================
+       TOPBAR (minimalista e elegante)
+       =============================== */
+    .topbar{
+      position:fixed;top:0;left:0;width:100%;height:var(--nav-height);
+      display:flex;align-items:center;justify-content:space-between;padding:0 22px;
+      gap:12px;z-index:2200;
+      background: linear-gradient(180deg, rgba(13,7,23,0.86), rgba(13,7,23,0.66));
+      border-bottom: 1px solid rgba(209,180,249,0.06);
+      backdrop-filter: blur(6px);
+    }
+    .brand{font-weight:800;color:var(--roxo-40);letter-spacing:0.6px;font-size:1.05rem}
+    .navlinks{display:flex;gap:12px;align-items:center}
+    .navlinks a{
+      padding:8px 12px;border-radius:10px;font-weight:700;font-size:0.95rem;
+      color:var(--roxo-50);opacity:0.95;transition:all .18s var(--ease)
+    }
+    .navlinks a:hover{background:rgba(152,109,223,0.09);transform:translateY(-3px)}
+    .nav-cta{background:linear-gradient(90deg,var(--roxo-40),var(--roxo-30));color:#0b0711;padding:8px 12px;border-radius:10px;font-weight:900}
+
+    /* ===============================
+       VIDEO BACKGROUND
+       =============================== */
+    video.background{
+      position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;z-index:-1;
+      opacity:0; /* inicialmente escondido; JS controla quando mostrar somente na página do cubo */
+      transition:opacity .6s ease;
+      filter:saturate(.95) contrast(.95);
+      pointer-events:none;
+    }
+    video.background.show {
+      opacity:1;
+      pointer-events:none;
+    }
+
+    /* ===============================
+       SEÇÃO PRINCIPAL — CUBO (PAGE1)
+       =============================== */
+    .page{width:100%;min-height:100vh;display:flex;justify-content:center;align-items:center;position:relative;box-sizing:border-box}
+    .hero{
+      height:calc(100vh - var(--nav-height));
+      margin-top:var(--nav-height);
+      display:flex;align-items:center;justify-content:center;padding:28px;
+      perspective:2000px;
+    }
+    .hero-inner{
+      width:100%;max-width:var(--max-width);display:flex;gap:28px;align-items:center;justify-content:space-between;
+    }
+    .left{
+      flex:1;max-width:540px;
+    }
+    .kicker{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(152,109,223,0.06);color:var(--roxo-40);font-weight:800;margin-bottom:12px}
+    h1{font-size:2.6rem;color:var(--roxo-10);line-height:1; margin-bottom:8px} /* headings em roxo escuro quando não em painel escuro */
+    p.lead{color:rgba(41,24,69,0.95);font-size:1.05rem;line-height:1.6;margin-bottom:14px} /* leiaute: texto "escuro" p/ fundos claros */
+    .hero-actions{display:flex;gap:12px;align-items:center}
+    .btn{padding:10px 14px;border-radius:12px;background:var(--glass);border:1px solid rgba(255,255,255,0.02);cursor:pointer;font-weight:800;color:var(--roxo-10)}
+    .btn.primary{background:linear-gradient(90deg,var(--roxo-40),var(--roxo-30));color:#0b0711;border:none;box-shadow:0 12px 40px rgba(110,71,162,0.12)}
+    .btn:hover{transform:translateY(-4px)}
+
+    /* CUBE WRAP */
+    .cube-wrap{flex:1;display:flex;align-items:center;justify-content:center;min-height:420px}
+    .scene{
+      width:540px;height:540px;position:relative;transform-style:preserve-3d;transition:transform .18s var(--ease)
+    }
+    @media (max-width:1024px){
+      .hero-inner{flex-direction:column-reverse;align-items:center}
+      .scene{width:76vw;height:76vw}
+      .face{width:100%;height:100%}
+      .left{text-align:center}
+      h1{font-size:1.8rem}
+    }
+
+    .face{
+      position:absolute;width:540px;height:540px;border-radius:18px;
+      border:3px solid rgba(209,180,249,0.06);
+      background: linear-gradient(180deg, rgba(110,71,162,0.12), rgba(41,24,69,0.22));
+      box-shadow: 0 40px 120px rgba(13,7,23,0.6), inset 0 0 80px rgba(152,109,223,0.05);
+      overflow:hidden;display:flex;align-items:center;justify-content:center;transition:filter .2s, box-shadow .2s;
+    }
+    .scene:hover .face{box-shadow: 0 60px 160px rgba(110,71,162,0.18)}
+    .face img{width:100%;height:100%;object-fit:cover;filter:contrast(0.98) saturate(1.05)}
+
+    .front  { transform: translateZ(270px); }
+    .back   { transform: rotateY(180deg) translateZ(270px); }
+    .right  { transform: rotateY(90deg) translateZ(270px); }
+    .left   { transform: rotateY(-90deg) translateZ(270px); }
+    .top    { transform: rotateX(90deg) translateZ(270px); }
+    .bottom { transform: rotateX(-90deg) translateZ(270px); }
+
+    /* ===============================
+       CAMADAS ABAIXO DO CUBO (PAGE2 PATTERN)
+       - camada Curriculum (detalhada)
+       - camada Projetos (linhas de 6)
+       - camada Biografia
+       - camada Contato
+       =============================== */
+
+    /* agora o portfolio tem fundo sólido do roxo escuro pedido (var --roxo-10) */
+    .portfolio{
+      background: var(--roxo-10);
+      padding: 18px 20px 120px; margin-top: var(--nav-height);
+      display:flex;flex-direction:column;align-items:stretch;box-sizing:border-box;
+      color: var(--roxo-10); /* textos fora de painéis seguem roxo escuro */
+    }
+
+    /* EM DESKTOP: aproveitar toda a largura — container full width */
+    .container{
+      max-width:none; /* ocupe toda largura conforme pedido */
+      width:100%;margin:0 auto;padding:0 18px;
+    }
+
+    /* DIVIDER (estilo elegante com barra) */
+    .divider{
+      width:100%;height:84px;display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:26px;
+    }
+    .divider .bar{position:absolute;left:50%;transform:translateX(-50%);width:100%;height:96px;background:linear-gradient(90deg,var(--roxo-40),var(--roxo-30));opacity:0.12;border-radius:18px;box-shadow:0 6px 30px rgba(152,109,223,0.12)}
+    .divider h2{position:relative;z-index:2;margin:0;color:var(--roxo-50);font-size:22px;font-weight:800}
+
+    /* ===============================
+       CURRÍCULO (CAMADA 1 abaixo do cubo)
+       =============================== */
+    .cv{
+      width:100%;display:flex;flex-direction:column;gap:18px;margin-top:6px;
+      align-items:stretch;
+    }
+    .cv-panel{
+      width:100%;background:linear-gradient(180deg, rgba(13,7,23,0.9), rgba(13,7,23,0.95));
+      border-radius:20px;padding:22px;box-shadow:0 12px 40px rgba(13,7,23,0.6);border:1px solid rgba(255,255,255,0.02);
+      color: var(--roxo-50); /* Texto claro dentro de painel escuro */
+    }
+
+    .profile-top{display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+    .profile-avatar{width:120px;height:120px;border-radius:14px;overflow:hidden;border:3px solid rgba(152,109,223,0.06)}
+    .profile-avatar img{width:100%;height:100%;object-fit:cover}
+    .profile-info{flex:1;min-width:220px}
+    .profile-info h3{font-size:1.8rem;color:var(--roxo-50);margin-bottom:6px}
+    .profile-info p{color:var(--roxo-50);line-height:1.6}
+
+    .info-badges{display:flex;gap:12px;margin-top:12px;flex-wrap:wrap}
+    .pill{background:rgba(152,109,223,0.06);padding:10px 14px;border-radius:999px;font-weight:800;color:var(--roxo-50);border:1px solid rgba(152,109,223,0.04)}
+
+    /* Formação acadêmica — cards verticais (texto claro) */
+    .edu-grid{display:flex;flex-direction:column;gap:12px;margin-top:12px}
+    .edu-card{
+      background:linear-gradient(180deg, rgba(152,109,223,0.06), rgba(209,180,249,0.02));
+      border-radius:14px;padding:16px;border:1px solid rgba(255,255,255,0.02);
+      color: var(--roxo-40);
+    }
+    .edu-card h4{color:var(--roxo-40);margin-bottom:6px}
+    .edu-card a{color:var(--roxo-40);font-weight:800;text-decoration:underline}
+    .edu-card p{color:rgba(209,180,249,0.92);line-height:1.5}
+
+    /* Habilidades grandes (lista) */
+    .skills-panel{
+      margin-top:18px;padding:14px;border-radius:12px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+      border:1px solid rgba(255,255,255,0.02);
+      color:var(--roxo-50);
+    }
+
+    /* ===============================
+       PROJETOS (cada fileira com 6 projetos)
+       =============================== */
+    .projects-section{width:100%;margin-top:28px}
+    .projects-rows{display:flex;flex-direction:column;gap:18px}
+    .projects-row{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+    @media (max-width:1300px){ .projects-row{grid-template-columns:repeat(4,1fr)} }
+    @media (max-width:900px){ .projects-row{grid-template-columns:repeat(2,1fr)} }
+    @media (max-width:520px){ .projects-row{grid-template-columns:1fr} }
+
+    .project-card{
+      background:linear-gradient(180deg, rgba(13,7,23,0.9), rgba(13,7,23,0.95));
+      padding:10px;border-radius:12px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 10px 28px rgba(13,7,23,0.6);
+      display:flex;flex-direction:column;gap:8px;transition:transform .14s var(--ease);
+      color:var(--roxo-50);
+    }
+    .project-card:hover{transform:translateY(-8px)}
+    .project-thumb{height:96px;border-radius:8px;overflow:hidden;background:#1a0e2a;display:flex;align-items:center;justify-content:center}
+    .project-title{font-weight:800;color:var(--roxo-40);font-size:0.98rem}
+    .project-desc{color:var(--roxo-50);font-size:0.9rem}
+
+    .project-meta{Display:flex;gap:8px;align-items:center;justify-content:space-between}
+    .project-tags{display:flex;gap:6px;flex-wrap:wrap}
+    .tag{padding:4px 6px;border-radius:999px;background:rgba(152,109,223,0.08);color:var(--roxo-40);font-weight:700;font-size:0.78rem}
+
+    .project-actions{display:flex;gap:8px;align-items:center}
+    .icon-btn{display:inline-flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;background:rgba(255,255,255,0.02);cursor:pointer;transition:transform .12s}
+    .icon-btn:hover{transform:scale(1.08)}
+    .icon{width:18px;height:18px;display:inline-block}
+
+    .icon-wrap{display:flex;align-items:center;gap:8px}
+    .icon-label{opacity:0;transform:translateY(-6px);transition:all .12s}
+    .icon-btn:hover .icon-label{opacity:1;transform:translateY(0)}
+
+    /* Modal (project detail) com blur no fundo */
+    .modal{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;z-index:5000;
+      background:linear-gradient(180deg, rgba(13,7,23,0.5), rgba(13,7,23,0.9));
+      padding:20px;
+    }
+    .modal.open{display:flex}
+    .modal-inner{width:min(980px,96%);background:linear-gradient(180deg, rgba(13,7,23,0.95), rgba(13,7,23,0.95));border-radius:12px;padding:18px;border:1px solid rgba(255,255,255,0.02);box-shadow:0 40px 120px rgba(13,7,23,0.8); color:var(--roxo-50)}
+    .modal-close{position:absolute;right:18px;top:18px;background:transparent;border-radius:999px;padding:6px;cursor:pointer;color:var(--roxo-50);font-size:1.1rem}
+
+    /* blur helper (applied to root content when modal open) */
+    .blurred{filter:blur(8px) brightness(.8);pointer-events:none;user-select:none}
+
+    /* ===============================
+       BIOGRAFIA
+       =============================== */
+    .bio-section{display:flex;gap:18px;align-items:center;margin-top:28px}
+    @media (max-width:920px){ .bio-section{flex-direction:column;align-items:center} }
+    .bio-photo{width:260px;height:260px;border-radius:18px;overflow:hidden;border:4px solid rgba(152,109,223,0.06)}
+    .bio-photo img{width:100%;height:100%;object-fit:cover}
+    .bio-text{flex:1}
+    .bio-text h3{color:var(--roxo-50);margin-bottom:8px}
+    .bio-text p{color:var(--roxo-50);line-height:1.6}
+
+    /* ===============================
+       CONTATO (última camada)
+       =============================== */
+    .contact{margin-top:28px;padding:18px;border-radius:12px;background:linear-gradient(180deg, rgba(13,7,23,0.95), rgba(13,7,23,0.95));border:1px solid rgba(255,255,255,0.02); color:var(--roxo-50)}
+    .contact-grid{display:flex;gap:18px;align-items:flex-start}
+    @media (max-width:920px){ .contact-grid{flex-direction:column} }
+    .contact-card{flex:1;padding:12px}
+    .socials{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+    .social-btn{display:inline-flex;align-items:center;gap:8px;padding:8px 10px;border-radius:10px;background:rgba(255,255,255,0.02);cursor:pointer;transition:transform .14s}
+    .social-btn:hover{transform:scale(1.06)}
+
+    /* footer */
+    footer{margin-top:34px;padding:20px;text-align:center;color:var(--roxo-50);border-top:1px solid rgba(255,255,255,0.02)}
+
+    /* small animations */
+    .fade-in{animation:fade .5s var(--ease) both}
+    @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+    /* ===============================
+       helpers responsivity tweaks
+       =============================== */
+    @media (max-width:640px){
+      .navlinks a{font-size:0.85rem;padding:6px 8px}
+      .hero-inner{padding:12px}
+      .scene{width:84vw;height:84vw}
+    }
+
+    /* ===============================
+       ADIÇÕES ESPECÍFICAS SOLICITADAS
+       - Página 1: apenas cubo visível
+       - Desktop: usar largura total (já aplicado em container)
+       - Texto: padrão roxo-10; dentro de painéis escuros roxo-50 (aplicado)
+       =============================== */
+
+    /* esconder o bloco "left" apenas na página do cubo, visualmente.
+       (mantive o HTML; apenas escondo com CSS, conforme pedido 'apenas adicionar') */
+    #page1 .left { display: none !important; }
+
+    /* transformar o cubo para ocupar mais espaço central na page1 */
+    #page1 .cube-wrap { flex: 1 1 100%; width: 100%; padding: 24px; }
+    #page1 .scene { width: min(86vw, 820px); height: min(86vw, 820px); }
+
+    /* separações claras entre páginas */
+    section.page { border-top: 6px solid rgba(152,109,223,0.04); box-shadow: inset 0 1px 0 rgba(255,255,255,0.01); }
+
+  </style>
+</head>
+<body>
+  <!-- ==========================================
+       BLOCO 3 — TOPO (TOPBAR)
+  ========================================== -->
+  <!-- TOPBAR -->
+  <header class="topbar" role="banner" aria-label="Barra do site">
+    <div class="brand">Breno J. Oliveira</div>
+    <nav class="navlinks" role="navigation" aria-label="Menu principal">
+      <a href="#page1">Início</a>
+      <a href="#cv-layer">Currículo</a>
+      <a href="#projects-layer">Projetos</a>
+      <a href="#bio-layer">Biografia</a>
+      <a href="#contact-layer" class="nav-cta">Contato</a>
+    </nav>
+  </header>
+
+  <!-- ==========================================
+       BLOCO 4 — MÍDIA DE FUNDO (VÍDEO + ÁUDIOS)
+  ========================================== -->
+  <!-- VÍDEO DE FUNDO (controlado por JS: só aparece na página 1) -->
+  <video id="bgVideo" class="background" autoplay muted loop playsinline>
+    <source src="video1.mp4" type="video/mp4">
+  </video>
+
+  <!-- ÁUDIOS (mantidos) -->
+  <audio id="musica" loop><source src="fundo.mp3" type="audio/mp3"></audio>
+  <audio id="giro"><source src="giro.mp3" type="audio/mp3"></audio>
+  <audio id="click"><source src="click.mp3" type="audio/mp3"></audio>
+
+  <!-- ==========================================
+       BLOCO 5 — PAGE 1 (CUBO)
+  ========================================== -->
+  <!-- ============== PAGE 1: CUBO ============== -->
+  <section id="page1" class="page hero" aria-label="Página 1 — Cubo">
+    <div class="hero-inner">
+      <div class="left fade-in">
+        <span class="kicker">Estudante • Desenvolvedor</span>
+        <h1>Olá — eu sou <span style="color:var(--roxo-40)">Breno J. Oliveira</span></h1>
+        <p class="lead">Crio projetos que unem software, hardware e design. Abaixo você encontra meu currículo, projetos, história e como me contatar.</p>
+        <div class="hero-actions">
+          <button class="btn primary" id="downloadCv">📄 Baixar CV</button>
+          <button class="btn" id="goCv">Currículo</button>
+          <button class="btn" id="goProjects">Projetos</button>
+        </div>
+        <div style="height:12px"></div>
+        <div style="display:flex;gap:10px;flex-wrap:wrap">
+          <div class="pill">17 anos</div>
+          <div class="pill">Estudante TI</div>
+          <div class="pill">Front-end • Arduino</div>
+        </div>
+      </div>
+
+      <div class="cube-wrap fade-in" aria-hidden="false">
+        <div class="scene" id="cube" role="img" aria-label="Cubo 3D interativo">
+          <div class="face front"><img src="1.png" alt="Frente do cubo"></div>
+          <div class="face back"><img src="2.png" alt="Trás do cubo"></div>
+          <div class="face right"><img src="3.png" alt="Direita do cubo"></div>
+          <div class="face left"><img src="4.png" alt="Esquerda do cubo"></div>
+          <div class="face top"><img src="5.png" alt="Topo do cubo"></div>
+          <div class="face bottom"><img src="5.png" alt="Base do cubo"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==========================================
+       BLOCO 6 — PAGE 2 (PORTFÓLIO / CAMADAS)
+  ========================================== -->
+  <!-- ============== PAGE 2: Conteúdo em camadas (abaixo do cubo) ============== -->
+  <section id="page2" class="page portfolio" aria-label="Portfólio — camadas abaixo do cubo">
+    <div class="container">
+      <!-- DIVIDER -->
+      <div class="divider" aria-hidden="false">
+        <h2>Currículo & Projetos</h2>
+        <div class="bar" role="presentation"></div>
+      </div>
+
+      <!-- ==========================================
+           BLOCO 6.1 — CAMADA: CURRÍCULO (detalhado)
+      ========================================== -->
+      <!-- ========= CAMADA: CURRÍCULO (detalhado) ========= -->
+      <section id="cv-layer" class="cv">
+        <div class="cv-panel fade-in">
+          <div class="profile-top">
+            <div class="profile-avatar">
+              <!-- substitua me.jpg pela sua foto -->
+              <img src="me.jpg" alt="Foto Breno">
+            </div>
+            <div class="profile-info">
+              <h3>Breno J. Oliveira</h3>
+              <p>17 anos — Estudante de Tecnologia da Informação. Apaixonado por tecnologia, desenvolvimento criativo e soluções funcionais. Busco aplicar conhecimentos em projetos práticos e ambientes colaborativos.</p>
+
+              <div class="info-badges" style="margin-top:10px">
+                <div class="pill">HTML • CSS • JS</div>
+                <div class="pill">Arduino • C/C++</div>
+                <div class="pill">Figma • UI</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- resumo e destaque -->
+          <div style="display:flex;gap:18px;margin-top:18px;flex-wrap:wrap">
+            <div style="flex:1;min-width:260px">
+              <h4 style="color:var(--roxo-40);margin-bottom:8px">Resumo Profissional</h4>
+              <p style="color:var(--roxo-50);line-height:1.6">Aplicando conhecimento técnico e senso estético para construir projetos que resolvem problemas reais. Experiência com projetos acadêmicos, protótipos em Arduino e interfaces web responsivas.</p>
+            </div>
+
+            <div style="width:320px">
+              <h4 style="color:var(--roxo-40);margin-bottom:8px">Contato Rápido</h4>
+              <div style="color:var(--roxo-50)">Email: <strong id="emailText">breno.emailsenai@gmail.com</strong></div>
+              <div style="margin-top:6px;color:var(--roxo-50)">Telefone: <strong>+55 11 91577-2115</strong></div>
+              <div style="margin-top:10px;display:flex;gap:8px">
+                <button class="btn" onclick="copyEmail()">📋 Copiar email</button>
+                <button class="btn" onclick="openLink('https://github.com/Breno-J-Oliveira')">🔗 GitHub</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formação acadêmica (estilizada como nas imagens) -->
+          <div style="margin-top:18px">
+            <h4 style="color:var(--roxo-40);margin-bottom:10px">Formações Acadêmicas</h4>
+            <div class="edu-grid">
+              <div class="edu-card">
+                <h4>Curso Técnico de TI</h4>
+                <a href="#" target="_blank">Escola SENAI</a> - Conclusão prevista: Dez/2026
+                <p>Foco em programação, redes, projetos, web e metodologias ágeis.</p>
+              </div>
+              <div class="edu-card">
+                <h4>Curso de Informática Avançada</h4>
+                <a href="#" target="_blank">Escola AllNet</a> - Conclusão: 2023
+                <p>Domínio do Windows, Pacote Office completo, edição básica de imagens e vídeos.</p>
+              </div>
+              <div class="edu-card">
+                <h4>Criação de Jogos - Codezero</h4>
+                <a href="#" target="_blank">Escola Codezero</a> - Conclusão: 2025
+                <p>Introdução à lógica de jogos e programação básica de jogos.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Habilidades técnicas e comportamentais (como nas imagens) -->
+          <div style="margin-top:18px" class="skills-panel">
+            <h4 style="color:var(--roxo-40);margin-bottom:10px">Habilidades</h4>
+            <div style="display:flex;gap:22px;flex-wrap:wrap">
+              <div style="flex:1;min-width:260px">
+                <h5 style="margin-bottom:8px">Técnicas</h5>
+                <ul style="color:var(--roxo-50);line-height:1.7">
+                  <li>Linguagem web: HTML5, CSS3, JavaScript;</li>
+                  <li>Lógica de programação: estruturas, laços, funções;</li>
+                  <li>Pacote Office: Word, Excel, PowerPoint;</li>
+                  <li>Edição de vídeo: Sony Vegas, CapCut, Filmora;</li>
+                  <li>Edição de imagem: Adobe Photoshop;</li>
+                </ul>
+              </div>
+              <div style="flex:1;min-width:260px">
+                <h5 style="margin-bottom:8px">Comportamentais</h5>
+                <ul style="color:var(--roxo-50);line-height:1.7">
+                  <li>Proatividade e vontade de aprender;</li>
+                  <li>Organização e responsabilidade com prazos;</li>
+                  <li>Boa comunicação e trabalho em equipe;</li>
+                  <li>Adaptação a mudanças tecnológicas;</li>
+                  <li>Conhecimento básico de metodologias ágeis (Scrum);</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ==========================================
+           BLOCO 6.2 — CAMADA: PROJETOS
+      ========================================== -->
+      <!-- ========= CAMADA: PROJETOS (linhas de 6) ========= -->
+      <section id="projects-layer" class="projects-section fade-in" style="margin-top:22px">
+        <div style="display:flex;align-items:center;justify-content:space-between">
+          <h3 style="color:var(--roxo-40)">Projetos</h3>
+          <div style="color:var(--roxo-50);font-weight:700">Clique em um card para ver detalhes</div>
+        </div>
+
+        <div class="projects-rows" style="margin-top:12px">
+          <!-- ROW 1 -->
+          <div class="projects-row">
+            <!-- cards (mantidos) -->
+            <article class="project-card" data-project='{"title":"Semáforo Inteligente","img":"proj1.png","tags":["Arduino","C++"],"desc":"Semáforo com display 7-seg, interação pedestres e comunicação entre semáforos.","long":"Implementação com dois Arduinos, displays 7-seg, lógica de prioridade, debounce para botões e comunicação simples. Código documentado e modular.","github":"https://github.com/Breno-J-Oliveira/semaforo"}'>
+              <div class="project-thumb"><img src="proj1.png" alt="Semáforo"></div>
+              <div class="project-title">Semáforo Inteligente</div>
+              <div class="project-desc">Controle de semáforo com displays e pedestres.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Arduino</span><span class="tag">IoT</span></div>
+                <div class="project-actions">
+                  <div class="icon-btn" onclick="openProject(this)" title="Ver detalhes">
+                    <span class="icon">🔍</span><span class="icon-label">Detalhes</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <!-- outros cards... (mantidos como no seu código) -->
+            <article class="project-card" data-project='{"title":"Site de Download","img":"proj2.png","tags":["Frontend","UX"],"desc":"Protótipo para baixar vídeos de plataformas.","long":"Protótipo com identificação de plataforma e seletores de qualidade.","github":"https://github.com/Breno-J-Oliveira/video-downloader"}'>
+              <div class="project-thumb"><img src="proj2.png" alt="Site"></div>
+              <div class="project-title">Site de Download</div>
+              <div class="project-desc">Protótipo com player e opções.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Web</span><span class="tag">UX</span></div>
+                <div class="project-actions">
+                  <div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Tetris 2","img":"proj3.png","tags":["Game","JS"],"desc":"Remake do Tetris com mecânicas completas.","long":"Sistema de peças, rotação, detecção de linhas e manutenção de pontuação. Design moderno e responsivo.","github":"https://github.com/Breno-J-Oliveira/tetris2"}'>
+              <div class="project-thumb"><img src="proj3.png" alt="Tetris"></div>
+              <div class="project-title">Tetris 2</div>
+              <div class="project-desc">Jogo com mecânicas completas.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Game</span><span class="tag">JavaScript</span></div>
+                <div class="project-actions">
+                  <div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div>
+                </div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Protótipo Figma","img":"proj4.png","tags":["Figma","Design"],"desc":"Protótipo do app bancário.","long":"Protótipo com telas de login, fluxo e identidade visual.","github":"https://github.com/Breno-J-Oliveira/figma-prototype"}'>
+              <div class="project-thumb"><img src="proj4.png" alt="Figma"></div>
+              <div class="project-title">Protótipo Figma</div>
+              <div class="project-desc">Design de UI e fluxos.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Design</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Landing Page X","img":"proj5.png","tags":["HTML","CSS"],"desc":"Landing page showcase.","long":"Landing responsiva com animações e layout limpo.","github":"https://github.com/Breno-J-Oliveira/landing-x"}'>
+              <div class="project-thumb"><img src="proj5.png" alt="Landing"></div>
+              <div class="project-title">Landing Page X</div>
+              <div class="project-desc">Landing para produto.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">HTML</span><span class="tag">CSS</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Protótipo Game Y","img":"proj6.png","tags":["Demo"],"desc":"Protótipo interativo.","long":"Protótipo com animações.","github":"https://github.com/Breno-J-Oliveira/game-y"}'>
+              <div class="project-thumb"><img src="proj6.png" alt="Demo"></div>
+              <div class="project-title">Protótipo Game Y</div>
+              <div class="project-desc">Protótipo interativo.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Demo</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+          </div> <!-- end row 1 -->
+
+          <!-- ROW 2 (exemplo, duplicável) -->
+          <div class="projects-row">
+            <!-- ...cards (mantidos) -->
+            <article class="project-card" data-project='{"title":"Projeto A","img":"proj7.png","tags":["JS"],"desc":"Exemplo A","long":"Detalhes do projeto A.","github":"https://github.com/Breno-J-Oliveira/projeto-a"}'>
+              <div class="project-thumb"><img src="proj7.png" alt="A"></div>
+              <div class="project-title">Projeto A</div>
+              <div class="project-desc">Pequena descrição.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">JS</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Projeto B","img":"proj8.png","tags":["Node"],"desc":"Exemplo B","long":"Detalhes B","github":"https://github.com/Breno-J-Oliveira/projeto-b"}'>
+              <div class="project-thumb"><img src="proj8.png" alt="B"></div>
+              <div class="project-title">Projeto B</div>
+              <div class="project-desc">Frontend + backend (demo).</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Fullstack</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Projeto C","img":"proj9.png","tags":["CSS","Animation"],"desc":"Exemplo C","long":"Animações CSS avançadas e micro-interações.","github":"https://github.com/Breno-J-Oliveira/projeto-c"}'>
+              <div class="project-thumb"><img src="proj9.png" alt="C"></div>
+              <div class="project-title">Projeto C</div>
+              <div class="project-desc">Animações e interações.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">CSS</span><span class="tag">UI</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Projeto D","img":"proj10.png","tags":["React"],"desc":"Exemplo D","long":"App simples em React com roteamento e estado.","github":"https://github.com/Breno-J-Oliveira/projeto-d"}'>
+              <div class="project-thumb"><img src="proj10.png" alt="D"></div>
+              <div class="project-title">Projeto D</div>
+              <div class="project-desc">App React (demo).</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">React</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Projeto E","img":"proj11.png","tags":["Node"],"desc":"Exemplo E","long":"API simples em Node.js com endpoints REST.","github":"https://github.com/Breno-J-Oliveira/projeto-e"}'>
+              <div class="project-thumb"><img src="proj11.png" alt="E"></div>
+              <div class="project-title">Projeto E</div>
+              <div class="project-desc">Backend demo.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">Node</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+
+            <article class="project-card" data-project='{"title":"Projeto F","img":"proj12.png","tags":["Tooling"],"desc":"Exemplo F","long":"Ferramenta de produtividade; CLI + UI.","github":"https://github.com/Breno-J-Oliveira/projeto-f"}'>
+              <div class="project-thumb"><img src="proj12.png" alt="F"></div>
+              <div class="project-title">Projeto F</div>
+              <div class="project-desc">Ferramenta e utilitário.</div>
+              <div class="project-meta">
+                <div class="project-tags"><span class="tag">CLI</span></div>
+                <div class="project-actions"><div class="icon-btn" onclick="openProject(this)"><span class="icon">🔍</span><span class="icon-label">Detalhes</span></div></div>
+              </div>
+            </article>
+          </div> <!-- end row 2 -->
+        </div> <!-- end projects-rows -->
+
+      </section> <!-- end projects-layer -->
+
+      <!-- ==========================================
+           BLOCO 6.3 — CAMADA: BIOGRAFIA
+      ========================================== -->
+      <!-- ========= CAMADA: BIOGRAFIA ========= -->
+      <section id="bio-layer" class="bio-section fade-in" style="margin-top:28px">
+        <div class="bio-photo card-panel">
+          <!-- substitua me-large.jpg pela sua foto maior -->
+          <img src="me-large.jpg" alt="Foto de Breno">
+        </div>
+
+        <div class="bio-text">
+          <h3>Biografia</h3>
+          <p>Meu nome é Breno J. Oliveira. Desde cedo me interessei por eletrônica e programação — comecei com pequenos projetos em Arduino e, aos poucos, fui ligando conhecimento técnico com design e experiência do usuário. Atualmente estudo Tecnologia da Informação no SENAI, desenvolvo projetos pessoais e protótipos web, e procuro oportunidades para aprender em equipe e contribuir com projetos reais.</p>
+
+          <div style="height:12px"></div>
+
+          <h4 style="color:var(--roxo-40);margin-bottom:8px">Interesses</h4>
+          <p class="muted" style="color:var(--roxo-50)">Front-end, prototipação, jogos indie, automação com microcontroladores e design de interfaces.</p>
+
+          <div style="height:14px"></div>
+
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button class="btn" onclick="openLink('https://github.com/Breno-J-Oliveira')">GitHub</button>
+            <button class="btn" onclick="openLink('https://www.linkedin.com/in/seu-link')">LinkedIn</button>
+            <button class="btn" onclick="openLink('https://www.instagram.com/seu-perfil')">Instagram</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==========================================
+           BLOCO 6.4 — CAMADA: CONTATO E FOOTER
+      ========================================== -->
+      <!-- ========= CAMADA: CONTATO (última) ========= -->
+      <section id="contact-layer" class="contact fade-in" style="margin-top:28px">
+        <div class="contact-grid">
+          <div class="contact-card card-panel">
+            <h4 style="color:var(--roxo-50)">Fale comigo</h4>
+            <p class="muted" style="color:var(--roxo-50)">Prefere email? Mensagem direta? Aqui estão os canais.</p>
+            <div style="margin-top:10px">
+              <div class="muted" style="color:var(--roxo-50)">Email:</div>
+              <div><strong id="emailTextBottom" style="color:var(--roxo-50)">breno.emailsenai@gmail.com</strong></div>
+              <div style="height:8px"></div>
+              <div class="muted" style="color:var(--roxo-50)">Telefone:</div>
+              <div><strong style="color:var(--roxo-50)">+55 11 91577-2115</strong></div>
+
+              <div style="height:12px"></div>
+              <div style="display:flex;gap:8px;align-items:center">
+                <button class="btn" onclick="copyEmail()">📋 Copiar email</button>
+                <button class="btn primary" onclick="openLink('mailto:breno.emailsenai@gmail.com')">✉️ Enviar email</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="contact-card card-panel">
+            <h4 style="color:var(--roxo-50)">Redes sociais</h4>
+            <div class="socials" style="margin-top:10px">
+              <div class="social-btn" onclick="openLink('https://github.com/Breno-J-Oliveira')" title="GitHub">
+                <svg class="icon" viewBox="0 0 16 16" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2  .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.22 1.87 .87 2.33 .66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82A7.6 7.6 0 018 4.8c.68.003 1.36.092 2 .27 1.52-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.001 8.001 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+                </svg>
+                <span style="min-width:8px"></span>
+                <span class="muted" style="color:var(--roxo-50)">GitHub</span>
+              </div>
+
+              <div class="social-btn" onclick="openLink('https://www.linkedin.com/in/seu-link')" title="LinkedIn">
+                <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1 4.98 2.12 4.98 3.5zM0 8h5v16H0zM8 8h4.8v2.2h.1c.7-1.3 2.4-2.2 4.9-2.2C22.5 8 24 9.8 24 13.5V24h-5v-9.9c0-2.4-.9-4-3.2-4-1.7 0-2.7 1.1-3.2 2.1-.2.5-.3 1.2-.3 1.9V24H8z"/>
+                </svg>
+                <span style="min-width:8px"></span>
+                <span class="muted" style="color:var(--roxo-50)">LinkedIn</span>
+              </div>
+
+              <div class="social-btn" onclick="openLink('https://www.instagram.com/seu-perfil')" title="Instagram">
+                <svg class="icon" viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true">
+                  <path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2c1.66 0 3 1.34 3 3v10c0 1.66-1.34 3-3 3H7c-1.66 0-3-1.34-3-3V7c0-1.66 1.34-3 3-3h10zM12 7.5A4.5 4.5 0 1 0 12 16.5 4.5 4.5 0 0 0 12 7.5zM18.5 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <span style="min-width:8px"></span>
+                <span class="muted" style="color:var(--roxo-50)">Instagram</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FOOTER -->
+      <footer>
+        <div>© <strong style="color:var(--roxo-40)">Breno J. Oliveira</strong> — Feito com 💜</div>
+      </footer>
+    </div> <!-- end container -->
+  </section> <!-- end page2 -->
+
+  <!-- ==========================================
+       BLOCO 7 — MODAL DE PROJETO
+  ========================================== -->
+  <!-- PROJECT DETAIL MODAL (aplicará blur ao abrir) -->
+  <div class="modal" id="projectModal" aria-hidden="true" role="dialog" aria-label="Detalhes do projeto">
+    <div class="modal-inner" role="document">
+      <button class="modal-close" onclick="closeModal()">✕</button>
+      <div id="modalContent" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       BLOCO 8 — SCRIPTS (INTERATIVIDADE: CUBO, MODAL, NAV, UTIL)
+  ========================================== -->
+  <!-- SCRIPTS: interatividade (cubo, modal, navegação, utilitários) -->
+  <script>
+    /* ================================
+       BLOCO 8.1 — HELPERS DE BLUR
+       ================================ */
+    /* ------------------------------
+       UTIL: seleciona elementos que receberão blur
+       ------------------------------ */
+    const blurTargets = [
+      document.querySelector('.topbar'),
+      document.getElementById('page1'),
+      document.getElementById('page2')
+    ].filter(Boolean);
+
+    function applyBlur() { blurTargets.forEach(el => el.classList.add('blurred')); }
+    function removeBlur() { blurTargets.forEach(el => el.classList.remove('blurred')); }
+
+    /* ================================
+       BLOCO 8.2 — MODAL (ABRIR / FECHAR)
+       ================================ */
+    /* ------------------------------
+       MODAL: abrir/fechar com conteúdo do projeto
+       ------------------------------ */
+    const modal = document.getElementById('projectModal');
+    const modalContent = document.getElementById('modalContent');
+
+    function openProject(btn) {
+      const card = btn.closest('.project-card');
+      if (!card) return;
+      const raw = card.getAttribute('data-project') || '{}';
+      let data = {};
+      try { data = JSON.parse(raw); } catch(e){ console.error('JSON inválido em data-project', e); data = {}; }
+
+      // montar conteúdo (template)
+      const tagsHtml = (data.tags || []).map(t => `<span class="tag" style="margin-right:6px">${escapeHtml(t)}</span>`).join('');
+      const github = data.github ? `<button class="btn" onclick="openLink('${escapeHtml(data.github)}')">Ver no GitHub</button>` : '';
+
+      modalContent.innerHTML = `
+        <div style="display:flex;gap:16px;flex-direction:column">
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
+            <h2 style="color:var(--roxo-40);margin:0">${escapeHtml(data.title || 'Projeto')}</h2>
+            <div>${tagsHtml}</div>
+          </div>
+
+          <div style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px">
+            <div style="flex:1;min-width:260px">
+              <div style="height:320px;border-radius:10px;overflow:hidden;background:linear-gradient(90deg,var(--roxo-10),var(--roxo-30));display:flex;align-items:center;justify-content:center">
+                <img src="${escapeHtml(data.img || 'proj1.png')}" alt="${escapeHtml(data.title || 'Projeto')}" style="width:100%;height:100%;object-fit:cover">
+              </div>
+            </div>
+            <div style="width:360px;min-width:220px">
+              <h4 style="margin:0 0 8px 0;color:var(--roxo-40)">Descrição</h4>
+              <p style="color:var(--roxo-50);line-height:1.6">${escapeHtml(data.long || data.desc || 'Sem descrição')}</p>
+              <div style="margin-top:12px;display:flex;gap:8px">${github}
+                <button class="btn" onclick="closeModal()">Fechar</button>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top:10px;color:var(--roxo-50);font-size:0.9rem">Dica: edite o atributo <code>data-project</code> no card para atualizar informações.</div>
+        </div>
+      `;
+
+      // mostrar modal e aplicar blur
+      modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+      applyBlur();
+
+      // click fora fecha
+      setTimeout(()=> {
+        document.addEventListener('click', outsideModalClick);
+      }, 100);
+    }
+
+    function closeModal(){
+      modal.classList.remove('open'); modal.setAttribute('aria-hidden','true');
+      removeBlur();
+      document.removeEventListener('click', outsideModalClick);
+    }
+
+    function outsideModalClick(e){
+      if (!modal) return;
+      const inner = modal.querySelector('.modal-inner');
+      if (!inner) return;
+      if (!inner.contains(e.target)) closeModal();
+    }
+
+    /* ================================
+       BLOCO 8.3 — UTILITÁRIOS (LINKS, ESCAPE, COPY)
+       ================================ */
+    // small helper to open links in new tab
+    function openLink(url){
+      if(!url) return;
+      window.open(url, '_blank');
+    }
+
+    // escape simples para texto inserido em template
+    function escapeHtml(s){
+      return String(s || '').replaceAll('&', '&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
+    }
+
+    // copiar email
+    function copyEmail(){
+      const e1 = document.getElementById('emailText');
+      const e2 = document.getElementById('emailTextBottom');
+      const email = (e1 && e1.textContent) || (e2 && e2.textContent) || 'breno.emailsenai@gmail.com';
+      navigator.clipboard?.writeText(email).then(()=> {
+        alert('Email copiado: ' + email);
+      }).catch(()=> {
+        prompt('Copiar manualmente:', email);
+      });
+    }
+
+    /* ================================
+       BLOCO 8.4 — NAVEGAÇÃO SUAVE (TOPBAR E HERO)
+       ================================ */
+    /* ------------------------------
+       NAVEGAÇÃO SUAVE (topbar e botões do hero)
+       ------------------------------ */
+    document.querySelectorAll('.navlinks a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        const href = a.getAttribute('href');
+        const el = document.querySelector(href);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+
+    document.getElementById('goCv')?.addEventListener('click', ()=> {
+      document.getElementById('cv-layer').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('goProjects')?.addEventListener('click', ()=> {
+      document.getElementById('projects-layer').scrollIntoView({behavior:'smooth', block:'start'});
+    });
+    document.getElementById('downloadCv')?.addEventListener('click', ()=> {
+      // substitua 'cv.pdf' pelo caminho real do seu currículo
+      window.open('cv.pdf', '_blank');
+    });
+
+    /* ================================
+       BLOCO 8.5 — CUBO: INTERAÇÃO / AUTO-FIT
+       ================================ */
+    /* ------------------------------
+       CUBO: interação e auto-fit (mantendo sua lógica original)
+       ------------------------------ */
+    const cube = document.getElementById('cube');
+    const audioClick = document.getElementById('click');
+    const audioGiro = document.getElementById('giro');
+    const audioMus = document.getElementById('musica');
+
+    let rotateX = 0, rotateY = 0, autoRotate = true, idleTimeout, isGiroPlaying = false;
+    function updateRotation(){
+      if(cube) cube.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+    }
+    function playClick(){ if(audioClick && audioClick.readyState >= 2){ audioClick.currentTime = 0; audioClick.play().catch(()=>{}); } }
+    function tryPlayGiro(){ if(!isGiroPlaying && audioGiro && audioGiro.readyState >= 2){ isGiroPlaying = true; audioGiro.currentTime = 0; audioGiro.play().catch(()=>{}); } }
+    if (audioGiro) audioGiro.addEventListener('ended', ()=> isGiroPlaying = false);
+
+    function stopAutoRotate(){ autoRotate = false; clearTimeout(idleTimeout); idleTimeout = setTimeout(()=> autoRotate = true, 3000); }
+    function ativarMusica(){ if(audioMus) audioMus.play().catch(()=>{}); document.removeEventListener('click', ativarMusica); document.removeEventListener('touchstart', ativarMusica); }
+    document.addEventListener('click', ativarMusica);
+    document.addEventListener('touchstart', ativarMusica);
+
+    document.addEventListener('click', (e)=> { if (e.target === document.body || e.target === cube) playClick(); });
+
+    let lastX, lastY;
+    document.addEventListener('mousemove', (e)=> {
+      stopAutoRotate();
+      if(lastX !== undefined && lastY !== undefined){
+        rotateY += (e.clientX - lastX) * 0.3;
+        rotateX -= (e.clientY - lastY) * 0.3;
+        updateRotation();
+        tryPlayGiro();
+      }
+      lastX = e.clientX; lastY = e.clientY;
+    });
+
+    let touchStartX, touchStartY;
+    document.addEventListener('touchstart', (e)=> {
+      const t = e.touches[0]; touchStartX = t.clientX; touchStartY = t.clientY;
+    });
+    document.addEventListener('touchmove', (e)=> {
+      e.preventDefault();
+      stopAutoRotate();
+      const t = e.touches[0];
+      rotateY += (t.clientX - touchStartX) * 0.3;
+      rotateX -= (t.clientY - touchStartY) * 0.3;
+      updateRotation();
+      tryPlayGiro();
+      touchStartX = t.clientX; touchStartY = t.clientY;
+    }, {passive:false});
+
+    document.addEventListener('keydown', (e)=> {
+      stopAutoRotate();
+      switch(e.key){
+        case "ArrowUp": case "w": case "W": rotateX -= 10; break;
+        case "ArrowDown": case "s": case "S": rotateX += 10; break;
+        case "ArrowLeft": case "a": case "A": rotateY -= 10; break;
+        case "ArrowRight": case "d": case "D": rotateY += 10; break;
+      }
+      updateRotation(); tryPlayGiro();
+    });
+
+    setInterval(()=> { if(autoRotate){ rotateY += 0.55; rotateX += 0.25; updateRotation(); } }, 30);
+
+    function fitCubeToViewport(){
+      const vw = window.innerWidth;
+      const navH = document.querySelector('.topbar')?.offsetHeight || 0;
+      const vhAvailable = Math.max(0, window.innerHeight - navH);
+      let scale = 0.58;
+      if (vw >= 1400) scale = 0.52;
+      else if (vw >= 1024) scale = 0.56;
+      else if (vw < 420) scale = 0.5;
+      const size = Math.floor(Math.min(vw, vhAvailable) * scale);
+      const depth = Math.floor(size / 2);
+      if (cube){
+        cube.style.width = size + "px"; cube.style.height = size + "px";
+        cube.querySelectorAll('.face').forEach(face => {
+          face.style.width = size + "px"; face.style.height = size + "px";
+          if (face.classList.contains('front')) face.style.transform = `translateZ(${depth}px)`;
+          else if (face.classList.contains('back')) face.style.transform = `rotateY(180deg) translateZ(${depth}px)`;
+          else if (face.classList.contains('right')) face.style.transform = `rotateY(90deg) translateZ(${depth}px)`;
+          else if (face.classList.contains('left')) face.style.transform = `rotateY(-90deg) translateZ(${depth}px)`;
+          else if (face.classList.contains('top')) face.style.transform = `rotateX(90deg) translateZ(${depth}px)`;
+          else if (face.classList.contains('bottom')) face.style.transform = `rotateX(-90deg) translateZ(${depth}px)`;
+        });
+      }
+    }
+    window.addEventListener('load', fitCubeToViewport);
+    window.addEventListener('resize', fitCubeToViewport);
+    window.addEventListener('orientationchange', ()=> setTimeout(fitCubeToViewport, 120));
+
+    // ESC closes modal
+    document.addEventListener('keydown', (e)=> { if (e.key === 'Escape') closeModal(); });
+
+    /* ================================
+       BLOCO 8.6 — CONTROLE DO VÍDEO (mostrar só na PAGE1)
+       ================================ */
+    /* ------------------------------
+       NOVO: controlar exibição do vídeo apenas na PAGE1
+       ------------------------------ */
+    const bgVideo = document.getElementById('bgVideo');
+    // usar IntersectionObserver para detectar quando #page1 ocupa pelo menos 40% da viewport
+    const page1 = document.getElementById('page1');
+    if (page1 && bgVideo) {
+      const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting && entry.intersectionRatio > 0.35) {
+            bgVideo.classList.add('show');
+          } else {
+            bgVideo.classList.remove('show');
+          }
+        });
+      }, { threshold: [0, 0.25, 0.35, 0.6, 1] });
+      obs.observe(page1);
+    }
+
+    /* ================================
+       FIM DOS SCRIPTS
+       ================================ */
+  </script>
+</body>
+</html>
