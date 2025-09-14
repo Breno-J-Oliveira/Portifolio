@@ -1,7 +1,7 @@
-# 🧑‍💻 Portfólio - Breno J. Oliveira  
+#  Portfólio - Breno J. Oliveira  
 
 <p align="center"> 
-  <img src="https://img.shields.io/badge/status-online-brightgreen?style=for-the-badge" alt="Status do Projeto"> 
+    <img src="https://img.shields.io/badge/status-concluído-green?style=for-the-badge" alt="Status do Projeto">  
   <img src="https://img.shields.io/badge/versão-1.0-blue?style=for-the-badge" alt="Versão"> 
   <img src="https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white" alt="HTML5"> 
   <img src="https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white" alt="CSS3"> 
