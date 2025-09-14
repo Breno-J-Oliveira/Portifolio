@@ -96,10 +96,10 @@ Ele reflete minha paixão por tecnologia, criatividade e busca por soluções in
   <a href="https://www.linkedin.com/in/breno-j-oliveira-672619352/" target="_blank"> 
     <img src="https://img.shields.io/badge/LinkedIn-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white" alt="LinkedIn"> 
   </a> 
-  <a href="https://www.instagram.com/brenot300" target="_blank"> 
+  <a href="https://www.instagram.com/seu-perfil" target="_blank"> 
     <img src="https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white" alt="Instagram"> 
   </a> 
-  <a href="mailto:breno.emailsenai@gmail.com" target="_blank"> 
-    <img src="https://img.shields.io/badge/Email-D14836?style=for-the-badge&logo=gmail&logoColor=white" alt="Email"> 
+  <a href="https://x.com/seu-perfil" target="_blank"> 
+    <img src="https://img.shields.io/badge/X-1DA1F2?style=for-the-badge&logo=x&logoColor=white" alt="X"> 
   </a> 
 </p>  
