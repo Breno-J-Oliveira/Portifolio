@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- CSS externo -->
+  <link rel="stylesheet" href="style.css">
+
+  <!-- Ícone do site -->
+  <link rel="icon" href="img/icons/profile.svg">
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Pórtifolio | Breno J. Oliveira</title>
+</head>
+
+<body>
+
+  <!-- âncora de topo (para o link "início" do footer) -->
+  <a id="top" aria-hidden="true"></a>
+
+  <!-- =========================
+       Topbar
+  =========================== -->
+  <header id="topbar">
+    <div>
+      <h1><i class="fa-solid fa-user"></i> Breno J. Oliveira</h1>
+    </div>
+
+    <nav class="nav">
+      <h2>Meu Curriculo</a></h2>
+      <h2>Projetos</a></h2>
+      <h2>Sobre Mim</a></h2>
+      <h2>Contato</a></h2>
+    </nav>
+
+  </header>
+
+  <!-- =========================
+       Caixa de vídeo e cubo 3D
+  =========================== -->
+  <section class="video-box">
+    <video class="fundo" autoplay muted loop>
+      <source src="video/fundo1.mp4" type="video/mp4">
+    </video>
+
+    <div class="scene">
+      <div class="cube">
+        <div class="face front"><img src="img/1.png" alt="Frente"></div>
+        <div class="face back"><img src="img/2.png" alt="Trás"></div>
+        <div class="face right"><img src="img/3.png" alt="Direita"></div>
+        <div class="face left"><img src="img/4.png" alt="Esquerda"></div>
+        <div class="face top"><img src="img/5.png" alt="Topo"></div>
+        <div class="face bottom"><img src="img/5.png" alt="Base"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       Currículo
+  =========================== -->
+  <section id="curriculo" class="Curriculo">
+
+    <div class="Titulo">
+      <h1>Meu Curriculo</h1>
+    </div>
+
+    <!-- vídeo no background -->
+    <video autoplay muted loop playsinline>
+      <source src="video/fundo2.mp4" type="video/mp4">
+    </video>
+
+    <div id="minhafoto">
+      <img src="img/6.png" alt="minha foto">
+    </div>
+
+    <div id="informacoes">
+      <h1>Breno J. Oliveira</h1>
+      <hr>
+      <h3>17 anos — Estudante de Tecnologia da Informação.</h3>
+      <br>
+
+      <h3>Resumo Profissional:</h3>
+      <h4>Apaixonado por tecnologia, desenvolvimento criativo e solução funcionais e inovadoras. E sempre busco conhecer
+        e aplicar novas técnicas em projetos reais</h4>
+      <br>
+
+      <h3>Formações Acadêmicas:</h3>
+      <div class="Formações">
+        <h3>Curso Técnico de TI — Escola SENAI — Conclusão prevista: Dez/2026</h3>
+      </div>
+      <div class="Formações">
+        <h3>Curso de Infórmática Avançada — Escola All Net — Conclusão: 2023</h3>
+      </div>
+      <div class="Formações">
+        <h3>Curso De Criação De Jogos — Escola Gamers de Negocios — Conclusão: 2024</h3>
+      </div>
+      <div class="Formações">
+        <h3>Curso De Criação De Jogos — Escola Gamers de Negocios — Conclusão: 2024</h3>
+      </div>
+      <div class="Formações">
+        <h3>Curso De Criação De Jogos — Escola Gamers de Negocios — Conclusão: 2024</h3>
+      </div>
+
+      <br>
+      <h3>Habilidades:</h3>
+      <div class="icones">
+        <p>
+          <img alt="JavaScript"
+            src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
+          <img alt="Python" src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white">
+          <img alt="C#" src="https://img.shields.io/badge/C%23-68217A?style=flat&logo=c-sharp&logoColor=white">
+          <img alt="HTML" src="https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white">
+          <img alt="CSS" src="https://img.shields.io/badge/CSS-1572B6?style=flat&logo=css3&logoColor=white">
+          <img alt="Git" src="https://img.shields.io/badge/Git-F05033?style=flat&logo=git&logoColor=white">
+          <img alt="VS Code"
+            src="https://img.shields.io/badge/Visual_Studio_Code-0078D7?style=flat&logo=visual-studio-code&logoColor=white">
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       Projetos
+  =========================== -->
+  <section id="projetos" class="Projetos">
+    <div class="Titulo">
+      <h1>Projetos</h1>
+    </div>
+
+    <!-- vídeo no background -->
+    <video autoplay muted loop playsinline>
+      <source src="video/fundo3.mp4" type="video/mp4">
+    </video>
+
+    <div class="Caixas-de-projetos">
+      <article id="projetocaixa" onclick="projeto(1)">
+        <div id="titulo">
+          <h3>Site União Química</h3>
+        </div>
+        <div id="foto"><img src="img/projetos/projeto1.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ver mais</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(2)">
+        <div id="titulo">
+          <h3>Site Senai</h3>
+        </div>
+        <div id="foto"><img src="img/projetos/projeto2.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ver mais</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(3)">
+        <div id="titulo">
+          <h3>Site Max Titanium</h3>
+        </div>
+        <div id="foto"><img src="img/projetos/projeto3.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ver mais</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(4)">
+        <div id="titulo">
+          <h3>Meu Portfólio</h3>
+        </div>
+        <div id="foto"><img src="img/projetos/projeto4.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ver mais</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(5)">
+        <div id="titulo">
+          <h3>Currículo 1</h3>
+        </div>
+        <div id="foto"><img src="img/1.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ampliar</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(6)">
+        <div id="titulo">
+          <h3>Currículo 1</h3>
+        </div>
+        <div id="foto"><img src="img/1.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ampliar</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(7)">
+        <div id="titulo">
+          <h3>Currículo 1</h3>
+        </div>
+        <div id="foto"><img src="img/1.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ampliar</p>
+        </div>
+      </article>
+      <article id="projetocaixa" onclick="projeto(8)">
+        <div id="titulo">
+          <h3>Currículo 1</h3>
+        </div>
+        <div id="foto"><img src="img/1.png" alt="Foto"></div>
+        <div id="texto">
+          <p>Clique para ampliar</p>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- =========================
+       Sobre Mim
+  =========================== -->
+  <section id="sobremim" class="Sobremim">
+    <div class="Titulo">
+      <h1>Sobre Mim</h1>
+    </div>
+
+    <div class="sobre-container">
+      <div class="sobre-esquerda">
+        <div class="sobre-box">
+          <hr>
+          <h2>Breno J. Oliveira</h2>
+          <br>
+          <h3>
+            Oi, me chamo <strong>Breno</strong>, tenho 17 anos e de Santo André, SP. Sou um entusiasta da tecnologia,
+            apaixonado por desenvolvimento criativo e soluções inovadoras. Concluí o curso técnico em Informática
+            Avançada e, através do meu GitHub, compartilho uma variedade de projetos pessoais que vão desde mini-games e
+            experimentos de front-end até ferramentas que unem criatividade e funcionalidade. Busco constantemente
+            aprender, aprimorar minhas habilidades e colaborar em projetos que possam gerar impacto real, transformando
+            ideias em soluções práticas e eficientes.
+          </h3>
+          <br>
+
+          <hr>
+        </div>
+
+        <div class="github-stats">
+          <a href="https://github.com/Breno-J-Oliveira">
+            <img
+              src="https://github-readme-stats.vercel.app/api?username=Breno-J-Oliveira&show_icons=true&theme=tokyonight&include_all_commits=true&locale=pt-br"
+              alt="GitHub Stats">
+          </a>
+          <a href="https://github.com/Breno-J-Oliveira">
+            <img
+              src="https://github-readme-stats.vercel.app/api/top-langs/?username=Breno-J-Oliveira&layout=compact&theme=tokyonight&langs_count=8"
+              alt="Linguagens Mais Usadas">
+          </a>
+        </div>
+      </div>
+
+      <div class="sobre-direita">
+        <div class="foto-box">
+          <img src="img/6.png" alt="minha foto">
+        </div>
+
+        <div class="ferramentas-box">
+          <h3>Minhas Ferramentas Favoritas</h3>
+          <p>
+            <img class="minhasferramentas" alt="JavaScript"
+              src="https://img.shields.io/badge/JavaScript-F7DF1E?style=flat&logo=javascript&logoColor=black">
+            <img class="minhasferramentas" alt="Python"
+              src="https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white">
+            <img class="minhasferramentas" alt="C#"
+              src="https://img.shields.io/badge/C%23-68217A?style=flat&logo=c-sharp&logoColor=white">
+            <img class="minhasferramentas" alt="HTML"
+              src="https://img.shields.io/badge/HTML-E34F26?style=flat&logo=html5&logoColor=white">
+            <img class="minhasferramentas" alt="CSS"
+              src="https://img.shields.io/badge/CSS-1572B6?style=flat&logo=css3&logoColor=white">
+            <img class="minhasferramentas" alt="Git"
+              src="https://img.shields.io/badge/Git-F05033?style=flat&logo=git&logoColor=white">
+            <img class="minhasferramentas" alt="VS Code"
+              src="https://img.shields.io/badge/Visual_Studio_Code-0078D7?style=flat&logo=visual-studio-code&logoColor=white">
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================
+       Contatos
+  =========================== -->
+  <section id="contatos" class="Contatos">
+    <div class="Titulo">
+      <h1>Contato</h1>
+    </div>
+
+    <div class="Contatos-container">
+
+      <!-- Formulário -->
+      <div class="Contato-form">
+
+        <h1>Entre em Contato</h1>
+
+        <form action="breno.emailsenai@gmail.com" method="post" enctype="text/plain">
+          <label for="name">
+            <h3>Nome:</h3>
+          </label>
+          <input type="text" name="user_name" id="name" placeholder="Seu nome" required>
+
+          <label for="email">
+            <h3>Email:</h3>
+          </label>
+          <input type="email" name="user_email" id="email" placeholder="Seu email" required>
+
+          <label for="message">
+            <h3>Mensagem:</h3>
+          </label>
+          <textarea name="message" id="message" rows="5" placeholder="Entre em Contato" required></textarea>
+
+          <button type="submit">Enviar</button>
+        </form>
+      </div>
+
+      <!-- Redes sociais -->
+      <div class="Contato-redes">
+        <h2>Redes Sociais</h2>
+        <div id="redes">
+          <!-- Instagram -->
+          <a href="https://www.instagram.com/brenot300" target="_blank">
+            <i class="fa-brands fa-instagram"></i>
+          </a>
+
+          <!-- GitHub -->
+          <a href="https://github.com/Breno-J-Oliveira" target="_blank">
+            <i class="fa-brands fa-github"></i>
+          </a>
+
+          <!-- Email (corrigido) -->
+          <a href="mailto:breno.emailsenai@gmail.com" target="_blank">
+            <i class="fa-solid fa-envelope"></i>
+          </a>
+
+          <!-- Linkedin -->
+          <a href="https://www.linkedin.com/in/breno-j-oliveira-672619352/" target="_blank">
+            <i class="fa-brands fa-linkedin"></i>
+          </a>
+
+          <!-- WhatsApp -->
+          <a href="https://wa.me/5511915772115" target="_blank">
+            <i class="fa-brands fa-whatsapp"></i>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =========================
+     FOOTER
+  ========================== -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-inner">
+
+      <!-- bloco 1: marca + resumo -->
+      <div class="footer-brand">
+        <h2>Breno J. Oliveira</h2>
+        <p class="brand-sub">Estudante de TI · Desenvolvedor criativo · Santo André, SP</p>
+      </div>
+
+      <!-- bloco 2: navegação rápida -->
+      <nav class="footer-nav" aria-label="Navegação do rodapé">
+        <a href="#top">início</a>
+        <a href="#minhafoto">Currículo</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#sobremim">Sobre</a>
+        <a href="#contatos">Contato</a>
+      </nav>
+
+      <!-- bloco 3: contato rápido -->
+      <div class="footer-contact">
+        <a class="contact-mail" href="mailto:breno.emailsenai@gmail.com">breno.emailsenai@gmail.com</a>
+        <a class="contact-whatsapp" href="https://wa.me/5511915772115" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
+
+      <!-- bloco 4: redes sociais -->
+      <div class="footer-social" aria-hidden="false">
+        <a href="https://www.instagram.com/brenot300" target="_blank" rel="noopener" aria-label="Instagram">
+          <i class="fa-brands fa-instagram"></i>
+        </a>
+        <a href="https://github.com/Breno-J-Oliveira" target="_blank" rel="noopener" aria-label="GitHub">
+          <i class="fa-brands fa-github"></i>
+        </a>
+        <a href="mailto:breno.emailsenai@gmail.com" aria-label="Email">
+          <i class="fa-solid fa-envelope"></i>
+        </a>
+        <a href="https://www.linkedin.com/in/breno-j-oliveira-672619352/" target="_blank" rel="noopener"
+          aria-label="LinkedIn">
+          <i class="fa-brands fa-linkedin"></i>
+        </a>
+        <a href="https://wa.me/5511915772115" target="_blank" rel="noopener" aria-label="WhatsApp">
+          <i class="fa-brands fa-whatsapp"></i>
+        </a>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© <span id="footer-year">2025</span> Breno J. Oliveira. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+  <!-- Script externo -->
+  <script src="script.js"></script>
+</body>
+
+</html>

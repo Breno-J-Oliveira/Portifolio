@@ -1,0 +1,1578 @@
+/* ===========================
+   Reset básico
+   Zera margens/paddings e define box-sizing para facilitar o layout
+   =========================== */
+
+/* Aplica para todos os elementos */
+* {
+  margin: 0;
+  /* remove espaço padrão entre elementos */
+  padding: 0;
+  /* remove padding padrão */
+  box-sizing: border-box;
+  /* inclui padding e border na largura/altura */
+}
+
+/* ===========================
+   HTML e BODY - configurações globais
+   =========================== */
+
+/* garante que o html e body ocupem 100% do viewport */
+html,
+body {
+  height: 100%;
+  /* altura total do viewport */
+  background-color: rgb(0, 0, 0);
+  /* cor de fundo global preta */
+}
+
+/* ===========================
+   Fontes Futuristas
+   =========================== */
+
+/* Fonte para títulos principais (H1) */
+@font-face {
+  font-family: 'Neuropol';
+  /* nome da fonte */
+  src: url('font/Neuropol.otf') format('opentype');
+  /* caminho do arquivo */
+  font-display: swap;
+  /* garante carregamento rápido */
+}
+
+/* Fonte para subtítulos e textos gerais */
+@font-face {
+  font-family: 'LemonMilk';
+  /* nome da fonte */
+  src: url('font/LEMONMILK-Regular.otf') format('opentype');
+  /* caminho do arquivo */
+  font-display: swap;
+  /* garante carregamento rápido */
+}
+
+/* ===========================
+   Aplicação das fontes
+   =========================== */
+
+/* Títulos H1 */
+h1 {
+  font-size: clamp(15px, 2vw, 20px);
+  /* tamanho responsivo mínimo, ideal e máximo */
+  font-family: 'Neuropol', sans-serif;
+  /* aplica fonte */
+}
+
+/* Títulos H2 */
+h2 {
+  font-size: clamp(8px, 2.0vw, 12px);
+  /* tamanho responsivo */
+  font-family: 'LemonMilk', sans-serif;
+  /* aplica fonte */
+}
+
+/* Títulos H3 */
+h3 {
+  font-size: clamp(8px, 2vw, 8px);
+  /* tamanho responsivo */
+  font-family: 'LemonMilk', sans-serif;
+  /* aplica fonte */
+}
+
+/* Títulos H4 */
+h4 {
+  font-size: clamp(6px, 1.5vw, 8px);
+  /* tamanho responsivo */
+  font-family: 'LemonMilk', sans-serif;
+  /* aplica fonte */
+}
+
+/* Texto padrão: parágrafos, spans e listas */
+p,
+span,
+li {
+  font-size: clamp(6px, 1.5vw, 6px);
+  /* tamanho responsivo */
+  font-family: 'LemonMilk', sans-serif;
+  /* aplica fonte */
+}
+
+
+
+/* =========================== 
+   Topbar (barra superior)
+   =========================== */
+
+/* container principal da barra superior */
+#topbar {
+  position: fixed;
+  /* fixa no topo da página */
+  top: 0;
+  /* topo */
+  left: 0;
+  /* esquerda */
+  width: 100%;
+  /* ocupa largura total */
+  height: 50px;
+  /* altura fixa */
+  background: #2E236C;
+  /* cor de fundo roxa */
+  color: #ffffff;
+  /* cor do texto */
+  opacity: 0.8;
+  /* leve transparência */
+  display: flex;
+  /* ativa flexbox */
+  justify-content: space-between;
+  /* distribui itens com espaço entre eles */
+  align-items: center;
+  /* centraliza verticalmente */
+  padding: 0 20px;
+  /* espaçamento horizontal */
+  z-index: 10;
+  /* fica acima de outros elementos */
+}
+
+/* container da navegação interna */
+#topbar nav {
+  display: flex;
+  /* ativa flexbox */
+  gap: 20px;
+  /* espaço entre links */
+}
+
+
+/* links de navegação */
+.nav a {
+  color: #ffffff;
+  /* cor do link */
+  text-decoration: none;
+  /* remove sublinhado */
+  transition: 0.3s;
+  /* transição suave */
+}
+
+/* efeito hover nos links */
+.nav a:hover,
+.nav a:hover i {
+  color: rgb(250, 25, 250);
+  /* muda cor ao passar mouse */
+}
+
+/* ícones dentro da navegação */
+.nav i {
+  margin-right: 8px;
+  /* espaço à direita do ícone */
+  color: #ffffff;
+  /* cor do ícone */
+  transition: 0.3s;
+  /* transição suave */
+}
+
+/* ===========================
+   Caixa de vídeo (hero)
+   =========================== */
+
+/* container do vídeo de fundo */
+.video-box {
+  width: 100%;
+  /* ocupa largura total */
+  height: 100%;
+  /* ocupa altura total */
+  overflow: hidden;
+  /* esconde overflow */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  /* sombra */
+  position: relative;
+  /* posição relativa */
+  background: #000;
+  /* fundo preto */
+  z-index: 0;
+  /* fica atrás do cubo */
+}
+
+/* vídeo de fundo */
+.video-box video.fundo {
+  width: 100%;
+  /* ocupa largura total */
+  height: 100%;
+  /* ocupa altura total */
+  object-fit: cover;
+  /* cobre container mantendo proporção */
+  display: block;
+  /* display em bloco */
+}
+
+/* ===========================
+   Cubo 3D
+   =========================== */
+
+/* container da cena 3D */
+.scene {
+  --cube-size: 400px;
+  /* tamanho padrão do cubo */
+  width: var(--cube-size);
+  /* largura baseada na variável */
+  height: var(--cube-size);
+  /* altura baseada na variável */
+  perspective: calc(var(--cube-size) * 2);
+  /* perspectiva da cena */
+  position: absolute;
+  /* posição absoluta */
+  top: 50%;
+  /* centraliza vertical */
+  left: 50%;
+  /* centraliza horizontal */
+  transform: translate(-50%, -50%);
+  /* centraliza perfeitamente */
+  z-index: 2;
+  /* fica acima do vídeo */
+}
+
+/* cubo 3D em si */
+.cube {
+  width: 100%;
+  /* ocupa todo container */
+  height: 100%;
+  /* ocupa todo container */
+  position: relative;
+  /* posição relativa para faces */
+  transform-style: preserve-3d;
+  /* mantém faces 3D */
+  transition: transform .08s linear;
+  /* animação de rotação suave */
+}
+
+/* cada face do cubo */
+.face {
+  position: absolute;
+  /* posição absoluta */
+  width: 100%;
+  /* ocupa todo container */
+  height: 100%;
+  /* ocupa todo container */
+  border: 2px solid rgb(0, 0, 0);
+  /* borda preta */
+  display: flex;
+  /* ativa flexbox */
+  justify-content: center;
+  /* centraliza horizontalmente */
+  align-items: center;
+  /* centraliza verticalmente */
+  overflow: hidden;
+  /* esconde overflow */
+}
+
+/* imagem dentro da face */
+.face img {
+  width: 100%;
+  /* ocupa largura total */
+  height: 100%;
+  /* ocupa altura total */
+  object-fit: cover;
+  /* cobre a face mantendo proporção */
+  display: block;
+  /* display em bloco */
+}
+
+/* ===========================
+   Faces do cubo (posicionamento)
+   =========================== */
+
+/* frente do cubo */
+.front {
+  transform: translateZ(calc(var(--cube-size) / 2));
+}
+
+/* trás do cubo */
+.back {
+  transform: rotateY(180deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+/* lado direito do cubo */
+.right {
+  transform: rotateY(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+/* lado esquerdo do cubo */
+.left {
+  transform: rotateY(-90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+/* topo do cubo */
+.top {
+  transform: rotateX(90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+/* fundo do cubo */
+.bottom {
+  transform: rotateX(-90deg) translateZ(calc(var(--cube-size) / 2));
+}
+
+/* =========================== 
+   Seção Currículo
+   =========================== */
+
+/* ---------------------------
+   Título principal do currículo
+   --------------------------- */
+.Titulo {
+  width: 100%;
+  /* ocupa toda largura */
+  height: 50px;
+  /* altura fixa */
+  background-color: #5D3587;
+  /* fundo roxo */
+  position: absolute;
+  /* posição absoluta */
+  display: flex;
+  /* ativa flexbox */
+  justify-content: center;
+  /* centraliza horizontalmente */
+  align-items: center;
+  /* centraliza verticalmente */
+  border-radius: 12px;
+  /* cantos arredondados */
+  color: #FFD1E3;
+  /* cor do texto */
+  font-size: 20px;
+  /* tamanho do texto */
+  font-weight: bold;
+  /* negrito */
+  margin-bottom: 80px;
+  /* distância inferior */
+  transform: translateY(-20px);
+  /* ajuste vertical */
+  left: 0;
+  /* posiciona à esquerda */
+  transition: .3s ease;
+  /* transição suave */
+}
+
+/* efeito hover no título */
+.Titulo:hover {
+  letter-spacing: 15px;
+  /* aumenta espaçamento entre letras */
+}
+
+/* ---------------------------
+   Container principal do currículo
+   --------------------------- */
+
+/* ---------------------------
+   Vídeo de fundo da seção
+   --------------------------- */
+.Curriculo video {
+  position: absolute;
+  /* posicionamento absoluto */
+  top: 0;
+  /* topo */
+  left: 0;
+  /* esquerda */
+  width: 100%;
+  /* ocupa largura total */
+  height: 100%;
+  /* ocupa altura total */
+  object-fit: cover;
+  /* cobre o container mantendo proporção */
+  border-radius: 12px;
+  /* cantos arredondados */
+  z-index: -1;
+  /* fica atrás do conteúdo */
+}
+
+/* ---------------------------
+   Container de informações do currículo
+   --------------------------- */
+
+/* títulos dentro do container de informações */
+#informacoes h3 {
+  transition: 0.8s;
+  /* transição suave */
+}
+
+/* efeito hover nos títulos */
+#informacoes h3:hover {
+  color: rgb(250, 25, 250);
+  /* muda cor ao passar mouse */
+}
+
+/* ---------------------------
+   Caixas internas de formação/experiência
+   --------------------------- */
+.Formações {
+  width: 100%;
+  /* largura total */
+  background-color: #2E236C;
+  /* fundo roxo mais escuro */
+  border-radius: 12px;
+  /* cantos arredondados */
+  margin: 10px auto;
+  /* centraliza e espaçamento vertical */
+  padding: 20px;
+  /* espaçamento interno */
+  transition: transform .12s ease;
+  /* transição suave */
+}
+
+/* efeito hover nas caixas internas */
+.Formações:hover {
+  transform: scale(1.02);
+  /* leve aumento */
+  color: rgb(250, 25, 250);
+  /* muda cor do texto */
+}
+
+/* ---------------------------
+   Ícones dentro do currículo
+   --------------------------- */
+.icones {
+  display: flex;
+  /* ativa flexbox */
+  gap: 10%;
+  /* espaçamento entre ícones */
+  flex-wrap: wrap;
+  /* quebra linha quando necessário */
+  justify-content: flex-start;
+  margin-bottom: 2%;
+  /* distância inferior */
+}
+
+/* imagens dos ícones */
+.icones img {
+  object-fit: contain;
+  /* mantém proporção */
+  width: auto;
+  max-height: auto;
+  transition: 0.8s ease;
+  /* transição suave */
+}
+
+
+
+/* =========================== 
+   SEÇÃO PROJETOS
+   =========================== */
+
+/* ---------------------------
+   Container principal da seção
+   --------------------------- */
+.Projetos {
+  height: auto;
+  width: 100%;
+  /* ocupa largura total */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  border-radius: 12px;
+  /* cantos arredondados */
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha verticalmente */
+  position: relative;
+  /* posição relativa para elementos internos */
+  z-index: 1;
+  /* nível de camada */
+  transition: .3s ease;
+  /* transição suave */
+  padding: 20px;
+  /* espaçamento interno */
+}
+
+/* ---------------------------
+   Vídeo de fundo da seção
+   --------------------------- */
+.Projetos video {
+  position: absolute;
+  /* posicionamento absoluto */
+  top: 0;
+  /* topo da seção */
+  left: 0;
+  /* esquerda da seção */
+  width: 100%;
+  /* ocupa toda a largura */
+  height: 100%;
+  /* ocupa toda a altura */
+  object-fit: cover;
+  /* cobre o container mantendo proporção */
+  border-radius: 12px;
+  /* cantos arredondados */
+  z-index: -1;
+  /* fica atrás do conteúdo */
+}
+
+/* ---------------------------
+   Container das caixas de projetos
+   --------------------------- */
+.Caixas-de-projetos {
+  display: grid;
+  /* ativa grid layout */
+  grid-template-columns: repeat(2, 1fr);
+  /* padrão mobile: 2 colunas */
+  gap: 15px;
+  /* espaçamento entre caixas */
+  justify-items: center;
+  /* centraliza cada item */
+  margin: 2%;
+  /* margem geral */
+  margin-top: 5%;
+  /* distância do topo */
+  opacity: 0.8;
+  /* leve transparência */
+}
+
+/* ---------------------------
+   Caixa individual de projeto
+   --------------------------- */
+#projetocaixa {
+  height: auto;
+  /* altura total do container */
+  width: 100%;
+  /* largura total do container */
+  background: #5D3587;
+  /* fundo roxo escuro */
+  color: #FFD1E3;
+  /* cor do texto */
+  border-radius: 12px;
+  /* cantos arredondados */
+  padding: 15px;
+  /* espaçamento interno */
+  text-align: center;
+  /* centraliza o conteúdo */
+  cursor: pointer;
+  /* cursor de clique */
+  transition: transform .18s ease, box-shadow .18s ease;
+  /* animação suave */
+}
+
+/* ---------------------------
+   Efeito hover da caixa
+   --------------------------- */
+#projetocaixa:hover {
+  transform: scale(1.04);
+  /* aumenta levemente */
+  background: #824cbb;
+  /* muda fundo para tom mais claro */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  /* sombra suave */
+}
+
+/* ---------------------------
+   Título do projeto dentro da caixa
+   --------------------------- */
+#projetocaixa #titulo {
+  font-weight: bold;
+  /* negrito */
+  margin-bottom: 10px;
+  /* espaço abaixo do título */
+}
+
+/* ---------------------------
+   Imagem do projeto dentro da caixa
+   --------------------------- */
+#projetocaixa #foto img {
+  width: 100%;
+  /* ocupa largura total */
+  height: 25vh;
+  /* altura fixa */
+  object-fit: cover;
+  /* mantém proporção da imagem */
+  border-radius: 12px;
+  /* cantos arredondados */
+  margin-bottom: 10px;
+  /* espaço abaixo da imagem */
+}
+
+
+/* =========================== 
+   SEÇÃO SOBRE MIM
+   =========================== */
+
+/* ---------------------------
+   Container principal da seção
+   --------------------------- */
+.Sobremim {
+  width: 100%;
+  /* ocupa largura total */
+  height: 100%;
+  /* altura total */
+  background-color: #17153B;
+  /* fundo azul escuro */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  border-radius: 12px;
+  /* cantos arredondados */
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha verticalmente */
+  position: relative;
+  /* posição relativa para elementos internos */
+  z-index: 1;
+  /* nível de camada */
+  transition: .3s ease;
+  /* transição suave */
+  padding: 20px;
+  /* espaçamento interno */
+}
+
+/* ---------------------------
+   Container interno da seção
+   --------------------------- */
+.sobre-container {
+  display: flex;
+  /* ativa flexbox */
+  gap: 40px;
+  /* espaçamento entre esquerda e direita */
+  margin-top: 30px;
+  /* distância do topo */
+  padding-top: 5%;
+  /* padding interno superior */
+}
+
+/* ---------------------------
+   Lado esquerdo: textos e boxes
+   --------------------------- */
+.sobre-esquerda {
+  flex: 1;
+  /* ocupa metade do espaço disponível */
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha verticalmente */
+  gap: 20px;
+  /* espaço entre boxes */
+  padding-top: 5%;
+  /* espaçamento superior */
+}
+
+/* ---------------------------
+   Boxes de conteúdo sobre mim
+   --------------------------- */
+.sobre-box {
+  background: #2E236C;
+  /* fundo roxo */
+  padding: 20px;
+  /* espaçamento interno */
+  border-radius: 12px;
+  /* cantos arredondados */
+  color: #fff;
+  /* cor do texto */
+  margin: 20px auto;
+  /* centraliza e espaça verticalmente */
+  line-height: 1.5;
+  /* altura das linhas */
+  transition: .3s ease;
+  /* transição suave */
+  justify-content: center;
+  align-items: center;
+}
+
+
+/* ---------------------------
+   Estatísticas do Github
+   --------------------------- */
+.github-stats {
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: row;
+  /* organiza horizontalmente */
+  gap: 10px;
+  /* espaço entre imagens */
+  border-radius: 22px;
+  /* cantos arredondados */
+  border-color: white;
+  /* cor da borda */
+  transition: 0.8s ease;
+  /* transição suave */
+}
+
+.github-stats img {
+  width: auto;
+  /* largura automática */
+  height: 100%;
+  /* altura total do container */
+  border-radius: 8px;
+  /* cantos arredondados */
+  object-fit: cover;
+  /* mantém proporção da imagem */
+}
+
+/* ---------------------------
+   Lado direito: foto e ferramentas
+   --------------------------- */
+.sobre-direita {
+  flex: 1;
+  /* ocupa metade do espaço disponível */
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha verticalmente */
+  gap: 20px;
+  /* espaço entre elementos */
+}
+
+/* ---------------------------
+   Box da foto
+   --------------------------- */
+.foto-box img {
+  border-radius: 12px;
+  /* cantos arredondados */
+  display: block;
+  /* bloco para centralização */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  transition: .3s ease;
+  /* transição suave */
+}
+
+.foto-box img:hover {
+  transform: scale(1.05);
+  /* aumenta levemente ao passar mouse */
+}
+
+/* ---------------------------
+   Box de ferramentas
+   --------------------------- */
+.ferramentas-box {
+  background: #1e1e2f;
+  /* fundo escuro */
+  padding: 20px;
+  /* espaçamento interno */
+  border-radius: 12px;
+  /* cantos arredondados */
+  color: #fff;
+  /* cor do texto */
+  text-align: center;
+  /* centraliza conteúdo */
+}
+
+.ferramentas-box img {
+  margin: 5px;
+  /* espaçamento ao redor das imagens */
+}
+
+.minhasferramentas {
+  transition: 0.8s ease;
+  /* transição suave */
+}
+
+.minhasferramentas:hover {
+  transform: scale(1.2);
+  /* aumenta ao passar mouse */
+}
+
+/* ---------------------------
+   Hover das imagens e boxes
+   --------------------------- */
+.github-stats img:hover,
+.sobre-box:hover {
+  transform: scale(1.02);
+  /* aumenta levemente ao passar mouse */
+}
+
+
+/* ===========================
+   SEÇÃO CONTATOS
+   =========================== */
+
+/* ---------------------------
+   Container principal da seção
+   --------------------------- */
+.Contatos {
+  width: 100%;
+  /* ocupa largura total */
+  height: 120vh;
+  /* altura total */
+  background-color: #392467;
+  /* fundo roxo escuro */
+  color: white;
+  /* cor do texto */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  border-radius: 12px;
+  /* cantos arredondados */
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha verticalmente */
+  position: relative;
+  /* posição relativa para elementos internos */
+  z-index: 1;
+  /* nível de camada */
+  transition: .3s ease;
+  /* transição suave */
+  padding: 20px;
+  /* espaçamento interno */
+}
+
+/* ---------------------------
+   Container geral: form + redes sociais
+   --------------------------- */
+.Contatos-container {
+  height: 50%;
+  /* altura do container */
+  width: 60%;
+  /* largura do container */
+  display: flex;
+  /* ativa Flexbox */
+  background: #5D3587;
+  /* fundo do container */
+  border-radius: 12px;
+  /* cantos arredondados */
+  overflow: hidden;
+  /* evita overflow visual */
+  flex-wrap: wrap;
+  /* permite quebra de linha */
+  gap: 20px;
+  /* espaçamento entre itens */
+  padding: 20px;
+  /* espaçamento interno */
+  transform: translate(40%, 50%);
+  /* posicionamento */
+}
+
+/* ---------------------------
+   Formulário de contato
+   --------------------------- */
+.Contato-form {
+  flex: 1 1 400px;
+  /* ocupa espaço mas mínimo de 400px */
+  padding: 20px;
+  /* espaçamento interno */
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha elementos verticalmente */
+  gap: 10px;
+  /* espaçamento entre campos */
+}
+
+.Contato-form label {
+  font-weight: bold;
+  /* deixa o texto em negrito */
+}
+
+.Contato-form input,
+.Contato-form textarea {
+  width: 100%;
+  /* ocupa toda largura do form */
+  padding: 10px;
+  /* espaçamento interno */
+  border-radius: 8px;
+  /* cantos arredondados */
+  border: none;
+  /* sem borda */
+  resize: none;
+  /* impede redimensionamento do textarea */
+}
+
+.Contato-form button {
+  margin-top: 15px;
+  /* espaço acima do botão */
+  padding: 10px 20px;
+  /* espaçamento interno do botão */
+  background-color: #A367B1;
+  /* cor de fundo padrão */
+  color: rgb(255, 255, 255);
+  /* cor do texto */
+  font-weight: bold;
+  /* texto em negrito */
+  border: none;
+  /* sem borda */
+  border-radius: 8px;
+  /* cantos arredondados */
+  cursor: pointer;
+  /* cursor de clique */
+  transition: 0.3s;
+  /* animação suave */
+}
+
+.Contato-form button:hover {
+  background-color: #FFD1E3;
+  /* muda fundo ao passar mouse */
+  color: black;
+  /* muda cor do texto ao passar mouse */
+}
+
+/* ---------------------------
+   Container redes sociais
+   --------------------------- */
+.Contato-redes {
+  height: auto;
+  /* altura automática */
+  width: 25%;
+  /* largura do container */
+  display: flex;
+  /* ativa flexbox */
+  align-items: center;
+  /* centraliza verticalmente */
+  justify-content: center;
+  /* centraliza horizontalmente */
+  flex-direction: column;
+  /* empilha título e ícones verticalmente */
+  padding: 20px;
+  /* espaçamento interno */
+  background: #392467;
+  /* fundo roxo escuro */
+  border-radius: 12px;
+  /* cantos arredondados */
+}
+
+.Contato-redes h2 {
+  color: #FFD1E3;
+  /* cor do título */
+  text-decoration: none;
+  /* remove sublinhado */
+  font-weight: bold;
+  /* negrito */
+  display: flex;
+  /* ativa flexbox */
+  align-items: center;
+  /* centraliza verticalmente */
+  margin-bottom: 7%;
+  /* espaço abaixo do título */
+  transition: 0.8s;
+  /* transição suave */
+}
+
+/* ---------------------------
+   Ícones das redes sociais
+   --------------------------- */
+#redes {
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: row;
+  /* coloca ícones lado a lado */
+  gap: 10px;
+  /* espaço entre ícones */
+  margin-top: 10px;
+  /* espaço acima dos ícones */
+  transition: 0.8s;
+  /* transição suave */
+}
+
+#redes i {
+  font-size: 20px;
+  /* tamanho dos ícones */
+  color: #FFD1E3;
+  /* cor padrão */
+  transition: 0.8s;
+  /* transição suave */
+}
+
+#redes i:hover,
+.Contato-redes h2:hover {
+  transform: scale(1.3);
+  /* aumenta tamanho ao passar mouse */
+  color: magenta;
+  /* muda cor para neon */
+}
+
+
+/* ===========================
+   SEÇÃO Footer
+   =========================== */
+
+/* ---------------------------
+   Container principal do footer
+   --------------------------- */
+.site-footer {
+  background: linear-gradient(180deg, rgba(8, 8, 12, 1) 0%, rgba(16, 12, 24, 1) 100%);
+  /* fundo gradiente escuro */
+  color: #dfe7ea;
+  /* cor do texto padrão */
+  padding: 34px 18px 16px;
+  /* espaçamento interno: cima, lados, baixo */
+  border-top: 1px solid rgba(255, 255, 255, 0.04);
+  /* borda superior suave */
+  font-family: 'LemonMilk', sans-serif;
+  /* fonte principal */
+}
+
+/* ---------------------------
+   Container interno do footer
+   --------------------------- */
+.site-footer .footer-inner {
+  max-width: 1200px;
+  /* limite máximo de largura */
+  margin: 0 auto;
+  /* centraliza horizontalmente */
+  display: flex;
+  /* ativa flexbox */
+  gap: 24px;
+  /* espaçamento entre itens */
+  align-items: flex-start;
+  /* alinha itens no topo */
+  justify-content: space-between;
+  /* distribui espaço entre itens */
+  flex-wrap: wrap;
+  /* permite quebra de linha em telas pequenas */
+}
+
+/* ---------------------------
+   Brand / Marca
+   --------------------------- */
+.footer-brand h2 {
+  font-family: 'Neuropol', sans-serif;
+  /* fonte futurista */
+  font-size: 25px;
+  /* tamanho do título */
+  color: magenta;
+  /* cor neon */
+  margin-bottom: 6px;
+  /* espaço abaixo do título */
+  letter-spacing: 1px;
+  /* espaçamento entre letras */
+}
+
+.footer-brand .brand-sub {
+  font-size: 13px;
+  /* tamanho menor para subtítulo */
+  color: #C8ACD6;
+  /* cor suave */
+  opacity: 0.95;
+  /* leve transparência */
+}
+
+/* ---------------------------
+   Navegação do rodapé
+   --------------------------- */
+.footer-nav {
+  display: flex;
+  /* ativa flexbox */
+  gap: 18px;
+  /* espaçamento entre links */
+  align-items: center;
+  /* centraliza verticalmente */
+  flex-wrap: wrap;
+  /* quebra de linha se necessário */
+}
+
+.footer-nav a {
+  color: #cbd6d8;
+  /* cor padrão dos links */
+  text-decoration: none;
+  /* remove sublinhado */
+  font-size: 14px;
+  /* tamanho do texto */
+  padding: 6px 8px;
+  /* espaçamento interno */
+  border-radius: 6px;
+  /* cantos arredondados */
+  transition: transform 0.18s ease, color 0.18s ease, background 0.18s ease;
+  /* animação suave */
+}
+
+.footer-nav a:hover,
+.footer-nav a:focus {
+  color: #0b0b0b;
+  /* muda cor ao hover/focus */
+  background: #c935eb;
+  /* fundo neon */
+  transform: translateY(-3px);
+  /* leve movimento para cima */
+  outline: none;
+  /* remove contorno padrão */
+}
+
+/* ---------------------------
+   Contato rápido
+   --------------------------- */
+.footer-contact {
+  display: flex;
+  /* ativa flexbox */
+  flex-direction: column;
+  /* empilha verticalmente */
+  gap: 8px;
+  /* espaçamento vertical */
+  align-items: flex-end;
+  /* alinha à direita */
+}
+
+.footer-contact a {
+  color: #FFD1E3;
+  /* cor dos links */
+  text-decoration: none;
+  /* remove sublinhado */
+  font-weight: 600;
+  /* negrito */
+  font-size: 14px;
+  /* tamanho do texto */
+  padding: 6px 10px;
+  /* espaçamento interno */
+  border-radius: 8px;
+  /* cantos arredondados */
+  transition: background .18s ease, transform .12s ease;
+  /* animação suave */
+}
+
+.footer-contact a:hover,
+.footer-contact a:focus {
+  background: rgba(255, 255, 255, 0.06);
+  /* fundo leve ao hover/focus */
+  transform: translateY(-2px);
+  /* movimento para cima */
+  outline: none;
+  /* remove contorno padrão */
+}
+
+/* ---------------------------
+   Redes sociais
+   --------------------------- */
+.footer-social {
+  display: flex;
+  /* ativa flexbox */
+  gap: 12px;
+  /* espaçamento entre ícones */
+  align-items: center;
+  /* centraliza verticalmente */
+  justify-content: flex-end;
+  /* alinha à direita */
+}
+
+.footer-social a {
+  display: inline-flex;
+  /* flex interno para ícone */
+  align-items: center;
+  /* centraliza verticalmente */
+  justify-content: center;
+  /* centraliza horizontalmente */
+  width: 44px;
+  /* largura do botão */
+  height: 44px;
+  /* altura do botão */
+  border-radius: 8px;
+  /* cantos arredondados */
+  color: #ffffff;
+  /* cor do ícone */
+  background: transparent;
+  /* fundo transparente */
+  text-decoration: none;
+  /* remove sublinhado */
+  transition: transform .18s ease, background .18s ease, color .18s ease;
+  /* animação suave */
+  font-size: 18px;
+  /* tamanho do ícone */
+}
+
+.footer-social a:hover,
+.footer-social a:focus {
+  transform: translateY(-4px) scale(1.06);
+  /* movimento e leve zoom */
+  background: linear-gradient(90deg, rgba(0, 255, 224, 0.08), rgba(255, 0, 200, 0.06));
+  /* gradiente leve */
+  color: magenta;
+  /* cor neon ao hover */
+  outline: none;
+  /* remove contorno */
+}
+
+/* ---------------------------
+   Bottom bar
+   --------------------------- */
+.footer-bottom {
+  margin-top: 18px;
+  /* espaço acima */
+  border-top: 1px solid rgba(255, 255, 255, 0.03);
+  /* borda superior leve */
+  padding-top: 12px;
+  /* espaçamento interno superior */
+  text-align: center;
+  /* centraliza texto */
+}
+
+.footer-bottom p {
+  font-size: 13px;
+  /* tamanho do texto */
+  color: #9fa7a9;
+  /* cor suave */
+  margin: 0;
+  /* remove margem padrão */
+}
+
+/* ---------------------------
+   Acessibilidade: foco visível
+   --------------------------- */
+.footer-nav a:focus,
+.footer-contact a:focus,
+.footer-social a:focus {
+  box-shadow: 0 0 0 3px rgba(0, 255, 224, 0.08);
+  /* destaque de foco */
+  border-radius: 8px;
+  /* mantém cantos arredondados */
+}
+
+
+/* ===========================
+   OVERRIDES RESPONSIVOS
+   =========================== */
+
+/* ===========================
+   MOBILE: até 900px
+   =========================== */
+@media (max-width: 900px) {
+
+  /* ---------------------------
+     Topbar
+     --------------------------- */
+  #topbar {
+    font-family: inherit;
+    /* mantém a fonte do body */
+  }
+
+  /* ---------------------------
+     Hero / Cubo
+     --------------------------- */
+  .video-box {
+    width: 100%;
+    /* largura total */
+    height: 100vh;
+    /* altura total da tela */
+    min-height: calc(100vh - var(--topbar-h));
+    /* altura mínima considerando topbar */
+    position: relative;
+    /* necessário para posicionamento interno */
+    overflow: hidden;
+    /* esconde excesso de conteúdo */
+    background: #000;
+    /* fundo preto */
+  }
+
+  .video-box video.fundo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* vídeo cobre todo o container */
+  }
+
+  .cube {
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    /* mantém 3D mesmo em mobile */
+  }
+
+  .scene {
+    --cube-size: 35vh;
+    /* reduz tamanho do cubo em mobile */
+  }
+
+    /* ---------------------------
+     Meu curriculo
+     --------------------------- */
+
+  .Curriculo {
+    width: 100%;
+    /* largura total */
+    height: auto;
+    /* altura total */
+    margin: 0 auto;
+    /* centraliza horizontalmente */
+    border-radius: 12px;
+    /* cantos arredondados */
+    display: flex;
+    /* ativa flexbox */
+    flex-direction: column;
+    /* empilha verticalmente */
+    position: relative;
+    /* posição relativa para elementos internos */
+    z-index: 1;
+    /* camada superior */
+    transition: .3s ease;
+    /* transição suave */
+    padding: 20px;
+    /* espaçamento interno */
+    overflow: hidden;
+    /* esconde overflow visual */
+  }
+
+  #minhafoto {
+    display: flex;
+    width: 100%;
+    height: aut0;
+    /* valor escrito igual ao seu, provavelmente era auto */
+    align-items: center;
+    justify-content: center;
+    transition: .3s ease;
+    position: relative;
+    margin-top: 20%;
+  }
+
+  #minhafoto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    transition: .3s ease;
+  }
+
+  #minhafoto:hover img {
+    transform: scale(1.05);
+    /* efeito ao passar mouse */
+  }
+
+  #informacoes {
+    width: 95%;
+    /* ocupa mais espaço em telas pequenas */
+    height: auto;
+    /* limite máximo de largura */
+    background-color: #433D8B;
+    /* fundo roxo escuro */
+    padding: 20px;
+    /* espaçamento interno */
+    border-radius: 12px;
+    /* cantos arredondados */
+    color: #C8ACD6;
+    /* cor do texto */
+    font-size: 16px;
+    /* tamanho do texto */
+    line-height: 1.4;
+    /* altura da linha */
+    margin: 20px auto;
+    /* centraliza horizontalmente */
+    position: relative;
+    /* posição relativa */
+    transition: .3s ease;
+    /* transição suave */
+  }
+
+  .icones {
+    display: flex;
+    gap: 10%;
+    transform: translateY(5px);
+    margin-bottom: 2%;
+  }
+
+  /* ---------------------------
+     Projetos
+     --------------------------- */
+  .Caixas-de-projetos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* 2 colunas no mobile */
+    gap: 12px;
+    margin: 20% auto;
+    width: 100%;
+  }
+
+
+  /* ---------------------------
+     Sobre mim
+     --------------------------- */
+  .sobre-container {
+    flex-direction: column;
+    /* empilha esquerda e direita */
+    gap: 18px;
+    /* espaçamento vertical */
+  }
+
+  /* ---------------------------
+     Contatos
+     --------------------------- */
+  .Contatos-container {
+    flex-direction: column;
+    /* empilha formulário e redes */
+    align-items: stretch;
+    /* ocupa toda largura */
+    gap: 12px;
+    /* espaçamento entre itens */
+  }
+
+  /* ---------------------------
+     Footer
+     --------------------------- */
+  .site-footer .footer-inner {
+    flex-direction: column;
+    /* empilha itens do footer */
+    align-items: center;
+    /* centraliza horizontalmente */
+    text-align: center;
+    /* centraliza texto */
+  }
+
+}
+
+/* ===========================
+   DESKTOP: acima de 900px
+   =========================== */
+@media (min-width: 900px) {
+
+  /* ---------------------------
+     Projetos
+     --------------------------- */
+  .Caixas-de-projetos {
+    grid-template-columns: repeat(4, 1fr);
+    /* 4 colunas em desktop */
+    gap: 20px;
+    padding: 0 16px;
+    max-width: 100%;
+  }
+
+  #projetocaixa {
+    max-height: 450px;
+  }
+
+  /* ---------------------------
+     Título hover
+     --------------------------- */
+  h1:hover {
+    color: rgb(250, 25, 250);
+    /* muda cor ao passar mouse */
+    transition: 0.8s ease;
+    /* animação suave */
+  }
+
+  /* ---------------------------
+     Cubo
+     --------------------------- */
+  .scene {
+    --cube-size: 35vh;
+    /* tamanho do cubo desktop */
+  }
+
+  /* ---------------------------
+     Meu curriculo
+     --------------------------- */
+
+  .Curriculo {
+    width: 100%;
+    /* largura total */
+    height: auto;
+    /* altura total */
+    margin: 0 auto;
+    /* centraliza horizontalmente */
+    border-radius: 12px;
+    /* cantos arredondados */
+    display: flex;
+    /* ativa flexbox */
+    flex-direction: column;
+    /* empilha verticalmente */
+    position: relative;
+    /* posição relativa para elementos internos */
+    z-index: 1;
+    /* camada superior */
+    transition: .3s ease;
+    /* transição suave */
+    padding: 20px;
+    /* espaçamento interno */
+    overflow: hidden;
+    /* esconde overflow visual */
+  }
+
+  /* ---------------------------
+     Minhas fotos
+     --------------------------- */
+
+
+  #minhafoto {
+    width: 40%;
+    height: 80vh;
+    transition: .3s ease;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 15vh;
+  }
+
+  #minhafoto img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    position: relative;
+    margin-left: 10%;
+    transition: .3s ease;
+  }
+
+  #minhafoto:hover img {
+    transform: rotate(15deg) scale(0.9);
+    /* efeito hover desktop */
+  }
+
+  /* ---------------------------
+     Informações
+     --------------------------- */
+
+  #informacoes {
+    width: 50%;
+    /* largura inicial 50% */
+    max-width: 900px;
+    /* limite máximo de largura */
+    min-width: 280px;
+    /* limite mínimo de largura */
+    background-color: #433D8B;
+    /* fundo roxo escuro */
+    padding: 20px;
+    /* espaçamento interno */
+    border-radius: 12px;
+    /* cantos arredondados */
+    color: #C8ACD6;
+    /* cor do texto */
+    font-size: 16px;
+    /* tamanho do texto */
+    line-height: 1.4;
+    /* altura da linha */
+    margin: 20px auto;
+    /* centraliza horizontalmente */
+    position: relative;
+    /* posição relativa */
+    left: 22.5%;
+    margin-top: -35%;
+    transition: .3s ease;
+    /* transição suave */
+  }
+
+  /* ---------------------------
+     SOBRE mIM
+     --------------------------- */
+  .sobre-box {
+    max-width: 100%;
+    height: auto;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* ---------------------------
+   Box da foto
+   --------------------------- */
+  .foto-box img {
+    height: auto;
+    /* altura automática */
+    width: 100%;
+    /* ocupa 80% do container */
+    max-width: 400px;
+    border-radius: 12px;
+    /* cantos arredondados */
+    display: block;
+    /* bloco para centralização */
+    margin: 0 auto 20%;
+    /* centraliza horizontalmente */
+    transition: .3s ease;
+    /* transição suave */
+  }
+
+  .github-stats {
+    justify-content: center;
+    align-items: center;
+    top: 20%;
+  }
+
+  .github-stats img {
+    max-width: 300px;
+  }
+
+
+}
+
+/* ===========================
+   RESETS GERAIS (seguros)
+   =========================== */
+a:focus,
+button:focus,
+input:focus,
+textarea:focus {
+  outline: 3px solid rgba(250, 25, 250, 0.18);
+  /* destaque de foco */
+  outline-offset: 3px;
+  /* espaço entre elemento e outline */
+}
