@@ -59,8 +59,8 @@ O site é totalmente interativo, responsivo e inclui animações modernas para t
 ## 📸 Imagens do Site  
 
 <p align="center">
-  <img src="img/preview1.png" alt="Preview do Portfólio" width="700px">  
-  <img src="img/preview2.png" alt="Seção Projetos" width="700px">  
+  <img src="print1.png" alt="Preview do Portfólio" width="700px">  
+  <img src="print2.png" alt="Seção Projetos" width="700px">  
 </p>  
 
 ---
