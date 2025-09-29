@@ -65,22 +65,6 @@ O site é totalmente interativo, responsivo e inclui animações modernas para t
 
 ---
 
-## 🎨 Protótipo no Figma  
-
-O design inicial do projeto foi planejado no **Figma**.  
-
-<p align="center">
-  <a href="https://www.figma.com/design/SEU-LINK-AQUI" target="_blank">
-    <img src="https://img.shields.io/badge/Ver%20no-Figma-blue?style=for-the-badge&logo=figma&logoColor=white" alt="Ver no Figma">
-  </a>
-</p>
-
-<p align="center">
-  <img src="img/figma-preview.png" alt="Protótipo no Figma" width="700px">  
-</p>  
-
----
-
 ## 🏆 Conclusão  
 
 Este portfólio é uma vitrine das minhas habilidades e da minha evolução como desenvolvedor.  
